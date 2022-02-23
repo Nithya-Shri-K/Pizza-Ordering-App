@@ -16,6 +16,7 @@ object AdminHandler {
     fun removeItem(id : Int)
     {
         val itemToRemove : Item = Database.listOfItems.filter { it.id == id }[0]
+        println(itemToRemove)
         Database.listOfItems.remove(itemToRemove)
     }
     fun addTopping(id : String,name : String,price : Float){

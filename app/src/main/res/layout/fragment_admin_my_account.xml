@@ -1,43 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MyAccountFragment">
-    <TextView
-        android:id="@+id/user_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Nithya"
-        android:textSize="22sp"
-        android:layout_marginTop ="25dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        />
-    <TextView
-        android:id="@+id/user_phoneno"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="7904788454"
-        android:textSize="18sp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
 
-        />
-
-    <View
-        android:id="@+id/divider4"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="?android:attr/listDivider" />
     <TextView
-        android:id="@+id/order_history"
+        android:id="@+id/menu_items"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Order History"
+        android:text="Menu Items"
         android:textSize="18sp"
         android:layout_marginTop ="5dp"
         android:layout_marginRight="10dp"
@@ -45,16 +19,16 @@
         android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
         />
     <View
-        android:id="@+id/divider3"
+        android:id="@+id/divider1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
         android:background="?android:attr/listDivider" />
     <TextView
-        android:id="@+id/address_book"
+        android:id="@+id/toppings"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Address Book"
+        android:text="Toppings"
         android:textSize="18sp"
         android:layout_marginTop ="5dp"
         android:layout_marginRight="10dp"
@@ -62,11 +36,12 @@
         android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
         />
     <View
-        android:id="@+id/divider5"
+        android:id="@+id/divider2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
         android:background="?android:attr/listDivider" />
+
     <TextView
         android:id="@+id/logout"
         android:layout_width="match_parent"

@@ -7,16 +7,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@drawable/background_auth"
     >
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:background="@color/white"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:padding="25dp"
-        android:id="@+id/authentication_container"
+        android:layout_height="match_parent"
+        android:id="@+id/register_or_login_container"
 
         />
 </LinearLayout>

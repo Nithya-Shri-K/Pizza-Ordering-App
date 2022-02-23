@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:text="Regular"
     android:textSize="15sp"
-    android:drawableRight="@drawable/ic_baseline_arrow_drop_down"
+    android:textColor="@color/black"
+
     />
 
 

@@ -13,7 +13,7 @@
 
 
     <ImageView
-        android:id="@+id/button_add_item"
+        android:id="@+id/button_add_topping"
         android:layout_width="50dp"
         android:layout_height="25dp"
         android:layout_marginTop="25dp"
@@ -35,7 +35,7 @@
                 android:layout_weight="2"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
-                android:text="Item Id"
+                android:text="Id"
                 android:gravity="left|center_vertical"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -43,26 +43,16 @@
             <TextView
 
                 android:layout_width="0dp"
-                android:layout_weight="7"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:text="Item Name"
-                android:paddingLeft="10dp"
-                android:gravity="left|center_vertical"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                />
-            <TextView
-                android:textSize="15sp"
-                android:layout_width="0dp"
                 android:layout_weight="4"
                 android:layout_height="wrap_content"
-                android:text="Size"
+                android:textSize="15sp"
+                android:text="Topping"
                 android:paddingLeft="10dp"
                 android:gravity="left|center_vertical"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 />
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="3"
@@ -74,21 +64,11 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 />
+
             <TextView
 
                 android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="wrap_content"
-                android:text="Category"
-                android:textSize="15sp"
-                android:gravity="left|center_vertical"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                />
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:gravity="left|center_vertical"
@@ -98,7 +78,7 @@
             <TextView
 
                 android:layout_width="0dp"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:gravity="left|center_vertical"
@@ -112,7 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/black"
-             />
+            />
     </TableLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

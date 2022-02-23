@@ -7,16 +7,24 @@
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/activity_admin.xml" value="0.134765625" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/activity_login_screen.xml" value="0.134765625" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/activity_main.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/activity_register_or_login.xml" value="0.134765625" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/admin_menu_items.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/fragment_admin_menu.xml" value="0.134765625" />
+        <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/fragment_admin_my_account.xml" value="0.134765625" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/fragment_home.xml" value="0.134765625" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/fragment_item_dialog.xml" value="0.1" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/fragment_login.xml" value="0.134765625" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/fragment_menu_items.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/fragment_my_account.xml" value="0.134765625" />
+        <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/fragment_my_account.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/fragment_register.xml" value="0.12421875" />
+        <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/fragment_register_or_login.xml" value="0.134765625" />
+        <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/fragment_topping_dialog.xml" value="0.12421875" />
+        <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/fragment_toppings.xml" value="0.12421875" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/item.xml" value="0.134765625" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/spinner_dropdown.xml" value="0.134765625" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/spinner_text.xml" value="0.134765625" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/toolbar_home.xml" value="0.134765625" />
+        <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/topping.xml" value="0.134765625" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/menu/admin_menu.xml" value="0.134765625" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/menu/bottom_navigation.xml" value="0.1" />
         <entry key="..\:/Users/nithya-12554/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_spinner_item.xml" value="0.134765625" />

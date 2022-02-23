@@ -16,13 +16,14 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import com.example.pizzaorderingapp.databinding.FragmentItemDialogBinding
 
-class ItemDialogFragment(private val listener : AdminMenuHandler,val operation : String) : DialogFragment() {
+class ItemDialogFragment(private val listener : AdminMenuHandler, private val operation : String) : DialogFragment() {
     private lateinit var item : Item
+    private lateinit var binding: FragmentItemDialogBinding
     constructor(listener: AdminMenuHandler,operation: String, item : Item) : this(listener,operation)
     {
      this.item = item
     }
-    private lateinit var binding: FragmentItemDialogBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,12 +34,13 @@ class ItemDialogFragment(private val listener : AdminMenuHandler,val operation :
         if(this::item.isInitialized){
             setDataToEdit(item)
         }
-        binding.buttonAdd.setOnClickListener {
-            addItem()
+        binding.buttonSave.setOnClickListener {
+            saveItem()
         }
         return binding.root
     }
-    private fun addItem(){
+    private fun saveItem(){
+
         val name = binding.itemName.text.toString()
         val categoryId = binding.radiobuttonCategory.checkedRadioButtonId
         val category = binding.root.findViewById<RadioButton>(categoryId).text.toString()
@@ -79,15 +81,15 @@ class ItemDialogFragment(private val listener : AdminMenuHandler,val operation :
             when(i.key){
                 Size.Regular -> {
                     binding.checkboxRegular.isChecked = true
-                    binding.textviewRegularPrice.setText( i.value.toString(),TextView.BufferType.EDITABLE)
+                    binding.textviewRegularPrice.setText( i.value,TextView.BufferType.EDITABLE)
                 }
                 Size.Medium -> {
                     binding.checkboxMedium.isChecked = true
-                    binding.textviewMediumPrice.setText(i.value.toString(),TextView.BufferType.EDITABLE)
+                    binding.textviewMediumPrice.setText(i.value,TextView.BufferType.EDITABLE)
                 }
                 Size.Large -> {
                     binding.checkboxLarge.isChecked = true
-                    binding.textviewLargePrice.setText(i.value.toString(),TextView.BufferType.EDITABLE)
+                    binding.textviewLargePrice.setText(i.value,TextView.BufferType.EDITABLE)
                 }
 
             }

@@ -11,7 +11,7 @@ class AdminActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        setFragment(AdminMenuFragment())
 
         binding.adminNavigation.setOnNavigationItemSelectedListener {
             when(it.itemId){
@@ -19,8 +19,12 @@ class AdminActivity : AppCompatActivity() {
             }
             true
         }
-
-
+        binding.adminNavigation.setOnNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.my_account -> setFragment(AdminMyAccountFragment())
+            }
+            true
+        }
     }
     private fun setFragment(fragment : Fragment){
         val transaction = supportFragmentManager.beginTransaction()

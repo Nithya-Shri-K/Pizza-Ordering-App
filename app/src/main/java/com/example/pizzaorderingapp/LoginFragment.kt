@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import com.example.pizzaorderingapp.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
@@ -28,9 +30,7 @@ class LoginFragment : Fragment() {
             val password = binding.password.text.toString()
             val currentUser = Authentication().login(phoneNumber, password)
             if (currentUser != null) {
-                val data = activity?.intent?.putExtra("currentUserId",currentUser.id)
-                activity?.setResult(Activity.RESULT_OK,data)
-                activity?.finish()
+                setFragmentResult("userId", bundleOf("currentUser" to currentUser ) )
             }
         }
         return binding.root

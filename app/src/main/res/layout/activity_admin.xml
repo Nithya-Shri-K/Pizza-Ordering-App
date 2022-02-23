@@ -18,5 +18,6 @@
         android:layout_height="wrap_content"
         app:menu="@menu/admin_menu"
         android:id="@+id/admin_navigation"
+        android:background="@color/red"
         />
 </LinearLayout>

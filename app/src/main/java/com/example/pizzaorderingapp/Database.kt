@@ -7,7 +7,7 @@ object Database {
         Item("Tandoori Chicken pizza",R.drawable.tandooripaneer,mutableMapOf(Size.Medium to "599",Size.Large to "799"),Category.NonVeg))
     val listOfToppings = ArrayList<Topping>()
     val listOfUsers = arrayListOf<Users>(
-        Users("1","Nithya","567889987","Nithya", arrayListOf(""),false),
-        Users("2","Rasal","345678989","Rasal", arrayListOf(""),true)
+        Users("Nithya","7904788454","Nithya", arrayListOf(""),false),
+        Users("Rasal","9043885171","Rasal", arrayListOf(""),true)
     )
 }

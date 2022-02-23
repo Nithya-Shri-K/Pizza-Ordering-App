@@ -15,10 +15,16 @@ class AdminMenuItemsAdapter(val menuItems : ArrayList<Item>,val context : Contex
         val price = view.findViewById<TextView>(R.id.item_price)
         val category = view.findViewById<TextView>(R.id.item_Category)
         val edit = view.findViewById<ImageView>(R.id.item_edit)
+        val delete = view.findViewById<ImageView>(R.id.item_delete)
         init{
             edit.setOnClickListener {
                 listener.edit(menuItems[adapterPosition])
             }
+            delete.setOnClickListener {
+               AdminHandler.removeItem(menuItems[adapterPosition].id)
+                listener.refreshMenu()
+            }
+
         }
         fun setSizesSpinnerData(sizes : ArrayList<String>){
             if(context != null){
