@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/item_name"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="item Name"
+
+       />
+
+    <ImageView
+        android:id="@+id/item_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_baseline_image_24"
+        />
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:padding="3dp"
+        android:text="Upload"
+        android:id="@+id/upload_image"
+        />
+    <RadioGroup
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/radiobutton_category"
+        >
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Veg"
+            android:text="Veg"
+            />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Nonveg"
+            android:text="NonVeg"
+            />
+    </RadioGroup>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Regular"
+        android:id="@+id/checkbox_regular"
+        />
+        <EditText
+            android:id="@+id/textview_regular_price"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/checkbox_medium"
+            android:layout_marginLeft="35dp"
+            android:inputType="textPersonName"
+            android:hint="Price" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Medium"
+        android:id="@+id/checkbox_medium"
+        android:layout_below="@id/checkbox_regular"
+        />
+        <EditText
+            android:id="@+id/textview_medium_price"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/checkbox_medium"
+            android:layout_below="@id/textview_regular_price"
+            android:layout_marginLeft="35dp"
+            android:inputType="textPersonName"
+            android:hint="Price" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Large"
+        android:id="@+id/checkbox_large"
+        android:layout_below="@id/checkbox_medium"
+        />
+
+        <EditText
+            android:id="@+id/textview_large_price"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textview_medium_price"
+            android:layout_marginLeft="55dp"
+            android:layout_toRightOf="@id/checkbox_large"
+            android:inputType="textPersonName"
+           android:hint="Price" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/button_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:text="Save" />
+
+
+</LinearLayout>

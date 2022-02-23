@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="*"
+    >
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/item_id"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Item Id"
+            android:textSize="15sp"
+            android:gravity="left|center_vertical"
+            />
+        <TextView
+            android:id="@+id/item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Item Name"
+            android:textSize="15sp"
+            android:gravity="left|center_vertical"
+            />
+        <Spinner
+            android:id="@+id/item_size"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Size"
+            android:textSize="15sp"
+            android:background="@null"
+            android:gravity="left|center_vertical"
+
+            />
+        <TextView
+            android:id="@+id/item_price"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Price"
+            android:textSize="15sp"
+            android:gravity="left|center_vertical"
+            />
+        <TextView
+            android:id="@+id/item_Category"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Category"
+            android:textSize="15sp"
+            android:gravity="left|center_vertical"
+            />
+        <ImageView
+            android:id="@+id/item_edit"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_baseline_edit_24"
+            android:layout_marginTop="7dp"
+            />
+        <ImageView
+            android:id="@+id/item_delete"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_baseline_delete"
+            android:layout_marginTop="7dp"
+            />
+
+
+
+    </TableRow>
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black" />
+</TableLayout>
+
+
+
