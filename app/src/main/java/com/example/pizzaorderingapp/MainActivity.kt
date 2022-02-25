@@ -7,9 +7,9 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.pizzaorderingapp.databinding.ActivityMainBinding
-const val PASSWORD_INCORRECT = 0
-const val PASSWORD_CORRECT = 1
-const val INVALID_USER = 2
+const val USER = "user"
+const val OPERATION = "operation"
+const val LOGOUT = "logout"
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding : ActivityMainBinding
@@ -23,21 +23,21 @@ class MainActivity : AppCompatActivity() {
         val getUser = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             if(it.resultCode == Activity.RESULT_OK) {
                 loggedIn = 1
-                if (it.data?.getSerializableExtra("user") != null) {
-                    user = it.data?.getSerializableExtra("user") as Users
-                    if(user.isAdmin){
-                        startActivity(Intent(this,AdminActivity::class.java))
+                if (it.data?.getSerializableExtra(USER) != null) {
+                    user = it.data?.getSerializableExtra(USER) as Users
+                    if (user.isAdmin) {
+                        startActivity(Intent(this, AdminActivity::class.java))
                         finish()
+                    } else {
+                        println(user.id)
+                        replaceFragment(MyAccountFragment(user))
                     }
-                    else
-                        replaceFragment(MyAccountFragment(user.id))
                 }
-
             }
         }
-        supportFragmentManager.setFragmentResultListener("logout",this){
+        supportFragmentManager.setFragmentResultListener(LOGOUT,this){
             requestKey,bundle ->
-            if(bundle.getString("operation") == "logout"){
+            if(bundle.getString(OPERATION) == LOGOUT){
                 loggedIn = 0
                 replaceFragment(HomeFragment())
 
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                         getUser.launch(intent)
                     }
                     else
-                        replaceFragment(MyAccountFragment(user.id))
+                        replaceFragment(MyAccountFragment(user))
 
                 }
             }
@@ -66,18 +66,4 @@ class MainActivity : AppCompatActivity() {
         transaction.replace(R.id.fragment_container,fragment).commit()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        println("onDestroy")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        println("onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        println("onResume")
-    }
 }

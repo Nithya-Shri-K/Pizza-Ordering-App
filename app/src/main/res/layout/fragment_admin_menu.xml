@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/drawer_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AdminMenuFragment"
     android:orientation="vertical">
-    <include
-        layout="@layout/toolbar_home"
-        android:layout_width="wrap_content"
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:id="@+id/menu_toolbar"
+        android:background="@drawable/title1"
+        >
 
-
+    </androidx.appcompat.widget.Toolbar>
     <ImageView
         android:id="@+id/button_add_item"
         android:layout_width="50dp"
@@ -20,12 +27,14 @@
         android:src="@drawable/ic_baseline_post_add_24"/>
 
     <TableLayout
+        android:id="@+id/pizza_table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:stretchColumns="*"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal">
 
         <TableRow
             android:layout_width="wrap_content"
@@ -108,19 +117,94 @@
 
         </TableRow>
         <View
-            android:id="@+id/divider2"
+            android:id="@+id/divider_pizza"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/black"
              />
+    </TableLayout>
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/topping_table"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        >
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/topping_name"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:text="Topping"
+                android:paddingLeft="10dp"
+                android:gravity="left|center_vertical"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/topping_price"
+                android:layout_width="100dp"
+                android:paddingLeft="10dp"
+                android:layout_height="wrap_content"
+                android:text="Price"
+                android:textSize="15sp"
+                android:gravity="left|center_vertical"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                />
+
+            <TextView
+
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:gravity="left|center_vertical"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                />
+            <TextView
+
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:gravity="left|center_vertical"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                />
+
+        </TableRow>
+        <View
+            android:id="@+id/divider_topping"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            />
     </TableLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recyclerview_menu_items"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
+        android:layout_gravity="center_horizontal"
         />
 
 
 </LinearLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:menu="@menu/items_category_menu"
+        android:layout_gravity="start"
+        android:id="@+id/navigation"
+        />
+</androidx.drawerlayout.widget.DrawerLayout>

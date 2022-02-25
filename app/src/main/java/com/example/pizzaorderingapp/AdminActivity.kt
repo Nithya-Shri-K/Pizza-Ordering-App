@@ -16,11 +16,6 @@ class AdminActivity : AppCompatActivity() {
         binding.adminNavigation.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.menu -> setFragment(AdminMenuFragment())
-            }
-            true
-        }
-        binding.adminNavigation.setOnNavigationItemSelectedListener {
-            when(it.itemId){
                 R.id.my_account -> setFragment(AdminMyAccountFragment())
             }
             true

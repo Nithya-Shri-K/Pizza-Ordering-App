@@ -1,29 +1,24 @@
 package com.example.pizzaorderingapp
 
-import android.app.Activity
-import android.app.Activity.RESULT_OK
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.TextView
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.os.bundleOf
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.setFragmentResult
 import com.example.pizzaorderingapp.databinding.FragmentItemDialogBinding
 
-class ItemDialogFragment(private val listener : AdminMenuHandler, private val operation : String) : DialogFragment() {
-    private lateinit var item : Item
+class ItemDialogFragment(private val listener : AdminHandlerListener, private val operation : String) : DialogFragment() {
+    private lateinit var selectedpizza : Items.Pizza
     private lateinit var binding: FragmentItemDialogBinding
-    constructor(listener: AdminMenuHandler,operation: String, item : Item) : this(listener,operation)
+    constructor(listener: AdminHandlerListener, operation: String, pizza : Items.Pizza) : this(listener,operation)
     {
-     this.item = item
-    }
+        this.selectedpizza = pizza
 
+
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,12 +26,42 @@ class ItemDialogFragment(private val listener : AdminMenuHandler, private val op
     ): View? {
 
         binding = FragmentItemDialogBinding.inflate(layoutInflater,container,false)
-        if(this::item.isInitialized){
-            setDataToEdit(item)
+        with(binding){
+            textviewRegularPrice.isEnabled = false
+            textviewMediumPrice.isEnabled = false
+            textviewLargePrice.isEnabled = false
+            checkboxRegular.setOnCheckedChangeListener { compoundButton, isChecked ->
+                binding.textviewRegularPrice.isEnabled = isChecked
+            }
+            checkboxMedium.setOnCheckedChangeListener{
+                    compoundButton, isChecked ->
+                binding.textviewMediumPrice.isEnabled = isChecked
+            }
+            checkboxLarge.setOnCheckedChangeListener{
+                    compoundButton, isChecked ->
+                binding.textviewLargePrice.isEnabled = isChecked
+            }
+
+            binding.buttonSave.setOnClickListener {
+                if(itemName.text.isNotEmpty() && radiobuttonCategory.checkedRadioButtonId != -1 && ((checkboxRegular.isChecked && textviewRegularPrice.text.isNotEmpty()) || (checkboxMedium.isChecked && textviewMediumPrice.text.isNotEmpty()) || (checkboxLarge.isChecked && textviewLargePrice.text.isNotEmpty())))
+                {
+                    saveItem()
+                }
+                else
+                {
+                    Toast.makeText(context,"Please enter all the required Fields",Toast.LENGTH_SHORT).show()
+                }
+
+            }
+            binding.buttonCancel.setOnClickListener { dismiss() }
+
         }
-        binding.buttonSave.setOnClickListener {
-            saveItem()
+
+        if(operation == "edit"){
+            println("inside Edit - $selectedpizza")
+            setDataToEdit(selectedpizza)
         }
+
         return binding.root
     }
     private fun saveItem(){
@@ -59,24 +84,25 @@ class ItemDialogFragment(private val listener : AdminMenuHandler, private val op
                 sizeAndPrice[Size.valueOf(sizeLarge.text.toString())] = priceLarge.text.toString()
         if(operation == "add"){
             AdminHandler.addItem(name,R.drawable.tandooripaneer,sizeAndPrice, Category.valueOf(category))
-            listener.refreshMenu()
+            listener.refresh()
             }
         else{
-            AdminHandler.updateItem(item,name,R.drawable.tandooripaneer,sizeAndPrice, Category.valueOf(category))
-            listener.refreshMenu()
+            AdminHandler.updateItem(selectedpizza,name,R.drawable.tandooripaneer,sizeAndPrice, Category.valueOf(category))
+            listener.refresh()
             }
 
         dismiss()
 
     }
 
-    private fun setDataToEdit(item : Item){
-        binding.itemName.setText(item.name, TextView.BufferType.EDITABLE)
-        if(item.category == Category.Veg)
+    private fun setDataToEdit(pizza : Items.Pizza){
+        println(pizza)
+        binding.itemName.setText(pizza.name, TextView.BufferType.EDITABLE)
+        if(pizza.category == Category.Veg)
             binding.Veg.isChecked = true
         else
             binding.Nonveg.isChecked = true
-        val sizeAndPrice = item.sizeAndPrice.entries
+        val sizeAndPrice = pizza.sizeAndPrice.entries
         for(i in sizeAndPrice){
             when(i.key){
                 Size.Regular -> {

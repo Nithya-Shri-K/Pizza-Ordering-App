@@ -11,13 +11,29 @@
        android:layout_height="wrap_content"
        layout="@layout/toolbar_home"
        />
-
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch_only_veg"
-        android:layout_width="150dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Only Veg "
-        android:layout_margin="25dp"/>
+        >
+
+     <androidx.appcompat.widget.SwitchCompat
+         android:id="@+id/switch_only_veg"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="20dp"
+         android:layout_marginTop="25dp"
+         android:text="Veg"
+          />
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switch_only_nonveg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Non-Veg "
+        android:layout_toRightOf="@id/switch_only_veg"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="25dp"/>
+
+    </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

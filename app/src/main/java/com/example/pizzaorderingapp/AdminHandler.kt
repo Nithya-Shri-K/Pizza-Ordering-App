@@ -3,28 +3,32 @@ package com.example.pizzaorderingapp
 object AdminHandler {
 
     fun addItem(name : String,image : Int,sizeAndPrice : MutableMap<Size,String>,category : Category){
-        val item = Item(name,image,sizeAndPrice,category)
+        val item = Items.Pizza(name,image,sizeAndPrice,category)
         Database.listOfItems.add(item)
 
     }
-    fun updateItem(item: Item,name : String,image : Int,sizeAndPrice : MutableMap<Size,String>,category : Category){
-       item.name=name
-        item.image = image
-        item.category=category
-        item.sizeAndPrice =sizeAndPrice
+    fun updateItem(pizza: Items.Pizza, name : String, image : Int, sizeAndPrice : MutableMap<Size,String>, category : Category){
+       pizza.name=name
+        pizza.image = image
+        pizza.category=category
+        pizza.sizeAndPrice =sizeAndPrice
+    }
+    fun updateTopping(topping : Items.Topping, name : String, price : String){
+        topping.name = name
+        topping.price = price
     }
     fun removeItem(id : Int)
     {
-        val itemToRemove : Item = Database.listOfItems.filter { it.id == id }[0]
-        println(itemToRemove)
-        Database.listOfItems.remove(itemToRemove)
+        val pizzaToRemove : Items = Database.listOfItems.filter { item -> item.id == id }[0]
+        println(pizzaToRemove)
+        Database.listOfItems.remove(pizzaToRemove)
     }
-    fun addTopping(id : String,name : String,price : Float){
-        val topping = Topping(id,name,price)
+    fun addTopping(name : String,price : String){
+        val topping = Items.Topping(name,price)
         Database.listOfToppings.add(topping)
     }
-    fun removeTopping(id : String){
-        val toppingToRemove : Topping = Database.listOfToppings.filter{ it.id == id }[0]
+    fun removeTopping(id : Int){
+        val toppingToRemove : Items = Database.listOfToppings.filter{item -> item.id == id }[0]
         Database.listOfToppings.remove(toppingToRemove)
     }
     fun showOrders(){

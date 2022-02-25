@@ -31,6 +31,8 @@ class LoginFragment : Fragment() {
             val currentUser = Authentication().login(phoneNumber, password)
             if (currentUser != null) {
                 setFragmentResult("userId", bundleOf("currentUser" to currentUser ) )
+            }else{
+                Toast.makeText(context,"Incorrect Phone number or password",Toast.LENGTH_SHORT).show()
             }
         }
         return binding.root

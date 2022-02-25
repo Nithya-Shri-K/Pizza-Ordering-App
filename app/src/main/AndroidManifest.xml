@@ -10,11 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PizzaOrderingApp">
         <activity
+            android:name=".CustomizeActivity"
+            android:exported="false" />
+        <activity
             android:name=".AdminActivity"
-            android:exported="false" >
-
-        </activity>
-
+            android:exported="false"></activity>
         <activity
             android:name=".RegisterOrLoginActivity"
             android:exported="false" />
@@ -26,7 +26,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

@@ -8,6 +8,12 @@
     android:orientation="vertical"
     android:gravity="center"
     >
+    <include
+        layout="@layout/toolbar_home"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/toolbar"
+        />
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

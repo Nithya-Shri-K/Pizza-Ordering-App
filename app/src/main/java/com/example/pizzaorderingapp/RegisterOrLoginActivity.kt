@@ -2,17 +2,22 @@ package com.example.pizzaorderingapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
+import com.example.pizzaorderingapp.databinding.ActivityRegisterOrLoginBinding
 
 class RegisterOrLoginActivity : AppCompatActivity() {
+    lateinit var binding : ActivityRegisterOrLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register_or_login)
+        binding = ActivityRegisterOrLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.toolbar.root.visibility = View.GONE
         setFragment(RegisterOrLoginFragment())
         supportFragmentManager.setFragmentResultListener("requestKey",this){
             requestKey,bundle ->
             val operation = bundle.getString("operation")
-            println(operation)
+            binding.toolbar.root.visibility = View.VISIBLE
             when(operation){
                 "login" -> setFragment(LoginFragment())
                 "register" -> setFragment(RegisterFragment())
@@ -20,7 +25,7 @@ class RegisterOrLoginActivity : AppCompatActivity() {
         }
         supportFragmentManager.setFragmentResultListener("userId",this){
                 requestKey,bundle ->
-            println("user id returned")
+            println(bundle.getSerializable("currentUser"))
             intent.putExtra("user",bundle.getSerializable("currentUser"))
             setResult(RESULT_OK,intent)
             finish()
