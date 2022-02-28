@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity() {
                         startActivity(Intent(this, AdminActivity::class.java))
                         finish()
                     } else {
-                        println(user.id)
                         replaceFragment(MyAccountFragment(user))
                     }
                 }
@@ -67,6 +66,12 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        binding.navigation.selectedItemId = R.id.home
+    }
+
     private fun replaceFragment(fragment : Fragment){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container,fragment).commit()

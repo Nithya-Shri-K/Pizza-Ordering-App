@@ -38,4 +38,9 @@ class RegisterOrLoginActivity : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+
+    }
 }

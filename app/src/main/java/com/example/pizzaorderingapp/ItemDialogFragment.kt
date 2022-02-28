@@ -26,20 +26,29 @@ class ItemDialogFragment(private val listener : AdminPizzaItemsHandler, private 
     ): View? {
 
         binding = FragmentItemDialogBinding.inflate(layoutInflater,container,false)
+        if(operation == EDIT){
+            setDataToEdit(selectedpizza)
+        }
         with(binding){
             textviewRegularPrice.isEnabled = false
             textviewMediumPrice.isEnabled = false
             textviewLargePrice.isEnabled = false
             checkboxRegular.setOnCheckedChangeListener { _, isChecked ->
                 binding.textviewRegularPrice.isEnabled = isChecked
+                if(!isChecked)
+                    binding.textviewRegularPrice.text.clear()
             }
             checkboxMedium.setOnCheckedChangeListener{
                     _, isChecked ->
                 binding.textviewMediumPrice.isEnabled = isChecked
+                if(!isChecked)
+                    binding.textviewMediumPrice.setText("",TextView.BufferType.EDITABLE)
             }
             checkboxLarge.setOnCheckedChangeListener{
                     _, isChecked ->
                 binding.textviewLargePrice.isEnabled = isChecked
+                if(!isChecked)
+                    binding.textviewLargePrice.setText("",TextView.BufferType.EDITABLE)
             }
 
             binding.buttonSave.setOnClickListener {
@@ -50,13 +59,9 @@ class ItemDialogFragment(private val listener : AdminPizzaItemsHandler, private 
             }
             binding.buttonCancel.setOnClickListener { dismiss() }
         }
-
-        if(operation == EDIT){
-            setDataToEdit(selectedpizza)
-        }
-
         return binding.root
     }
+
     private fun saveItem(){
 
         val name = binding.itemName.text.toString()
