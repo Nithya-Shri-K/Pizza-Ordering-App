@@ -15,10 +15,6 @@ import com.example.pizzaorderingapp.databinding.FragmentLoginBinding
 class LoginFragment : Fragment() {
 
     lateinit var binding: FragmentLoginBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,9 +26,9 @@ class LoginFragment : Fragment() {
             val password = binding.password.text.toString()
             val currentUser = Authentication().login(phoneNumber, password)
             if (currentUser != null) {
-                setFragmentResult("userId", bundleOf("currentUser" to currentUser ) )
+                setFragmentResult(CURRENT_USER_KEY, bundleOf(CURRENT_USER to currentUser ) )
             }else{
-                Toast.makeText(context,"Incorrect Phone number or password",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,getString(R.string.login_error_message),Toast.LENGTH_SHORT).show()
             }
         }
         return binding.root

@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 
-class MenuAdapter(var menu : ArrayList<Items.Pizza>, val context : Context?,val listener: ActionListener) : RecyclerView.Adapter<MenuAdapter.MenuItemViewHolder>() {
+class MenuAdapter(var menu : ArrayList<Pizza>, val context : Context?,val listener: UserActionListener) : RecyclerView.Adapter<MenuAdapter.MenuItemViewHolder>() {
 
     inner class MenuItemViewHolder(view : View) : RecyclerView.ViewHolder(view) {
         val itemImage: ImageView = view.findViewById<ImageView>(R.id.image_item)
         val itemTitle: TextView = view.findViewById<TextView>(R.id.text_title)
-        val itemCost: TextView = view.findViewById<TextView>(R.id.text_cost)
+        val itemPrice: TextView = view.findViewById<TextView>(R.id.text_cost)
         val sizeSpinner: Spinner = view.findViewById<Spinner>(R.id.spinner_size)
         val addItem: Button = view.findViewById(R.id.button_add_item)
         fun setSizeSpinnerData(sizes: ArrayList<String>) {
@@ -21,9 +21,7 @@ class MenuAdapter(var menu : ArrayList<Items.Pizza>, val context : Context?,val 
                 ArrayAdapter<String>(context, R.layout.support_simple_spinner_dropdown_item, sizes)
                 sizeSpinner.adapter = adapter
             }
-
         }
-
     }
 
     override fun onCreateViewHolder(
@@ -52,7 +50,7 @@ class MenuAdapter(var menu : ArrayList<Items.Pizza>, val context : Context?,val 
         }
         holder.addItem.setOnClickListener {
             val size = holder.sizeSpinner.selectedItem.toString()
-            val price = holder.itemCost.text.toString()
+            val price = holder.itemPrice.text.toString()
             listener.customize(menu[position],size,price)
         }
         setPrice(holder)
@@ -71,7 +69,7 @@ class MenuAdapter(var menu : ArrayList<Items.Pizza>, val context : Context?,val 
                 id: Long
             ) {
                 val size : Size = Size.valueOf(adapterView?.getItemAtPosition(selectedSize).toString())
-                holder.itemCost.text = "Rs. ${menu[holder.adapterPosition].sizeAndPrice[size].toString()}"
+               holder.itemPrice.text ="Rs. ${menu[holder.adapterPosition].sizeAndPrice[size].toString()}"
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -79,5 +77,4 @@ class MenuAdapter(var menu : ArrayList<Items.Pizza>, val context : Context?,val 
             }
         }
     }
-
 }

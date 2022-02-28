@@ -11,7 +11,7 @@ class CustomizeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCustomizeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val selectedItem  = intent.getSerializableExtra("selectedItem") as Items.Pizza
+        val selectedItem  = intent.getSerializableExtra("selectedItem") as Pizza
         binding.selectedItemName.text = selectedItem.name
         binding.price.text = intent.getStringExtra("selectedPrice")
         binding.size.text = intent.getStringExtra("selectedSize")
@@ -19,7 +19,7 @@ class CustomizeActivity : AppCompatActivity() {
             finish()
         }
         val recyclerView = binding.recyclerviewToppings
-        val toppings = ToppingAdapter(Database.listOfToppings)
+        val toppings = ToppingAdapter(Database.listOfToppings, USER)
         recyclerView.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         recyclerView.adapter = toppings
     }

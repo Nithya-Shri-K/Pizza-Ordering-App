@@ -27,10 +27,10 @@ class RegisterOrLoginFragment : Fragment() {
     ): View? {
         binding = FragmentRegisterOrLoginBinding.inflate(layoutInflater,container,false)
         binding.buttonLogin.setOnClickListener {
-        setFragmentResult("requestKey", bundleOf("operation" to "login"))
+        setFragmentResult(REQUEST_KEY, bundleOf(OPERATION to LOGIN))
         }
         binding.buttonRegister.setOnClickListener {
-            setFragmentResult("requestKey", bundleOf("operation" to "register"))
+            setFragmentResult(REQUEST_KEY, bundleOf(OPERATION to REGISTER))
         }
         return binding.root
     }

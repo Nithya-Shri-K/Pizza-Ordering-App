@@ -10,10 +10,10 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.pizzaorderingapp.databinding.FragmentItemDialogBinding
 
-class ItemDialogFragment(private val listener : AdminHandlerListener, private val operation : String) : DialogFragment() {
-    private lateinit var selectedpizza : Items.Pizza
+class ItemDialogFragment(private val listener : AdminPizzaItemsHandler, private val operation : String) : DialogFragment() {
+    private lateinit var selectedpizza : Pizza
     private lateinit var binding: FragmentItemDialogBinding
-    constructor(listener: AdminHandlerListener, operation: String, pizza : Items.Pizza) : this(listener,operation)
+    constructor(listener: AdminPizzaItemsHandler, operation: String, pizza : Pizza) : this(listener,operation)
     {
         this.selectedpizza = pizza
 
@@ -30,35 +30,28 @@ class ItemDialogFragment(private val listener : AdminHandlerListener, private va
             textviewRegularPrice.isEnabled = false
             textviewMediumPrice.isEnabled = false
             textviewLargePrice.isEnabled = false
-            checkboxRegular.setOnCheckedChangeListener { compoundButton, isChecked ->
+            checkboxRegular.setOnCheckedChangeListener { _, isChecked ->
                 binding.textviewRegularPrice.isEnabled = isChecked
             }
             checkboxMedium.setOnCheckedChangeListener{
-                    compoundButton, isChecked ->
+                    _, isChecked ->
                 binding.textviewMediumPrice.isEnabled = isChecked
             }
             checkboxLarge.setOnCheckedChangeListener{
-                    compoundButton, isChecked ->
+                    _, isChecked ->
                 binding.textviewLargePrice.isEnabled = isChecked
             }
 
             binding.buttonSave.setOnClickListener {
                 if(itemName.text.isNotEmpty() && radiobuttonCategory.checkedRadioButtonId != -1 && ((checkboxRegular.isChecked && textviewRegularPrice.text.isNotEmpty()) || (checkboxMedium.isChecked && textviewMediumPrice.text.isNotEmpty()) || (checkboxLarge.isChecked && textviewLargePrice.text.isNotEmpty())))
-                {
                     saveItem()
-                }
                 else
-                {
-                    Toast.makeText(context,"Please enter all the required Fields",Toast.LENGTH_SHORT).show()
-                }
-
+                    Toast.makeText(context,getString(R.string.save_error_message),Toast.LENGTH_SHORT).show()
             }
             binding.buttonCancel.setOnClickListener { dismiss() }
-
         }
 
-        if(operation == "edit"){
-            println("inside Edit - $selectedpizza")
+        if(operation == EDIT){
             setDataToEdit(selectedpizza)
         }
 
@@ -82,7 +75,7 @@ class ItemDialogFragment(private val listener : AdminHandlerListener, private va
                 sizeAndPrice[Size.valueOf(sizeMedium.text.toString())] = priceMedium.text.toString()
         if(sizeLarge.isChecked)
                 sizeAndPrice[Size.valueOf(sizeLarge.text.toString())] = priceLarge.text.toString()
-        if(operation == "add"){
+        if(operation == ADD_ITEM){
             AdminHandler.addItem(name,R.drawable.tandooripaneer,sizeAndPrice, Category.valueOf(category))
             listener.refresh()
             }
@@ -90,13 +83,11 @@ class ItemDialogFragment(private val listener : AdminHandlerListener, private va
             AdminHandler.updateItem(selectedpizza,name,R.drawable.tandooripaneer,sizeAndPrice, Category.valueOf(category))
             listener.refresh()
             }
-
         dismiss()
-
     }
 
-    private fun setDataToEdit(pizza : Items.Pizza){
-        println(pizza)
+    private fun setDataToEdit(pizza : Pizza){
+
         binding.itemName.setText(pizza.name, TextView.BufferType.EDITABLE)
         if(pizza.category == Category.Veg)
             binding.Veg.isChecked = true
@@ -117,12 +108,7 @@ class ItemDialogFragment(private val listener : AdminHandlerListener, private va
                     binding.checkboxLarge.isChecked = true
                     binding.textviewLargePrice.setText(i.value,TextView.BufferType.EDITABLE)
                 }
-
             }
         }
-
     }
-
-
-
 }

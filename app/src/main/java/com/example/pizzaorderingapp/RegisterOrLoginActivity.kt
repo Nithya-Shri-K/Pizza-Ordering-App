@@ -14,26 +14,25 @@ class RegisterOrLoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.toolbar.root.visibility = View.GONE
         setFragment(RegisterOrLoginFragment())
-        supportFragmentManager.setFragmentResultListener("requestKey",this){
+        supportFragmentManager.setFragmentResultListener(REQUEST_KEY,this){
             requestKey,bundle ->
-            val operation = bundle.getString("operation")
+            val operation = bundle.getString(OPERATION)
             binding.toolbar.root.visibility = View.VISIBLE
             when(operation){
-                "login" -> setFragment(LoginFragment())
-                "register" -> setFragment(RegisterFragment())
+                LOGIN -> setFragment(LoginFragment())
+                REGISTER -> setFragment(RegisterFragment())
             }
         }
-        supportFragmentManager.setFragmentResultListener("userId",this){
+        supportFragmentManager.setFragmentResultListener(CURRENT_USER_KEY,this){
                 requestKey,bundle ->
-            println(bundle.getSerializable("currentUser"))
-            intent.putExtra("user",bundle.getSerializable("currentUser"))
+            intent.putExtra(CURRENT_USER,bundle.getSerializable(CURRENT_USER))
             setResult(RESULT_OK,intent)
             finish()
 
         }
 
     }
-     fun setFragment(fragment : Fragment){
+     private fun setFragment(fragment : Fragment){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.register_or_login_container,fragment).commit()
 

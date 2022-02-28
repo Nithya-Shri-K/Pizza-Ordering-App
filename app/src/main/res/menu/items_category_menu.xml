@@ -16,6 +16,14 @@
 
         </menu>
     </item>
+    <item android:title="Order History">
+        <menu>
+    <item
+        android:id="@+id/orders"
+        android:title="Orders"
+        />
+        </menu>
+    </item>
     <item
         android:id="@+id/logout"
         android:title="Logout"

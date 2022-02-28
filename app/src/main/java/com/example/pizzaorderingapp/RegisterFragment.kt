@@ -13,26 +13,29 @@ import com.example.pizzaorderingapp.databinding.FragmentRegisterBinding
 class RegisterFragment : Fragment() {
     lateinit var binding : FragmentRegisterBinding
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRegisterBinding.inflate(layoutInflater,container,false)
         binding.buttonRegister.setOnClickListener {
-            val firstname = binding.firstname.text.toString()
-            val lastname = binding.lastname.text.toString()
-            val phoneNumber = binding.phoneNumber.text.toString()
-            val password = binding.password.text.toString()
-            registerUser(firstname,lastname,phoneNumber,password)
+            getUserData()
         }
 
         return binding.root
     }
-    fun registerUser(firstname: String,lastname : String,phoneNumber : String,password : String){
+    private fun getUserData(){
+        val firstname = binding.firstname.text.toString()
+        val lastname = binding.lastname.text.toString()
+        val phoneNumber = binding.phoneNumber.text.toString()
+        val password = binding.password.text.toString()
+        registerUser(firstname,lastname,phoneNumber,password)
+    }
+    private fun registerUser(firstname: String, lastname : String, phoneNumber : String, password : String){
         val user = Users("$firstname $lastname",phoneNumber,password,ArrayList(),false)
+        println(user)
         Database.listOfUsers.add(user)
-        setFragmentResult("userId", bundleOf("currentUser" to user))
+        setFragmentResult(CURRENT_USER_KEY, bundleOf(CURRENT_USER to user))
     }
 
 }
