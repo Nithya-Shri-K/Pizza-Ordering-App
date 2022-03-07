@@ -32,9 +32,7 @@ class RegisterFragment : Fragment() {
         registerUser(firstname,lastname,phoneNumber,password)
     }
     private fun registerUser(firstname: String, lastname : String, phoneNumber : String, password : String){
-        val user = Users("$firstname $lastname",phoneNumber,password,ArrayList(),false)
-        println(user)
-        Database.listOfUsers.add(user)
+        val user = UserHandler.createUser(firstname,lastname,phoneNumber,password)
         setFragmentResult(CURRENT_USER_KEY, bundleOf(CURRENT_USER to user))
     }
 

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".CartFragment">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/empty_cart"
+        android:visibility="gone"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Your Cart is Empty"
+            android:layout_gravity="center"
+            android:gravity="center"
+            />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/cart"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/cart_recycler_view"
+            android:layout_weight="1"
+        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/label_delivery_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delivery Address"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:id="@+id/delivery_address"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="30, 1st street, Moogambigai Nagar, M K Kottai,Trichy 11"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="select address"
+                android:id="@+id/button_select_address"
+                />
+
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+
+                >
+                <TextView
+                    android:id="@+id/label_bill_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bill Details"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:id="@+id/label_item_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/label_bill_details"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="15dp"
+                    android:text="item Total" />
+
+                <TextView
+                    android:id="@+id/item_total_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/label_item_total"
+                    android:layout_alignParentRight="true"
+                    android:text="Rs. 299" />
+
+                <TextView
+                    android:id="@+id/label_delivery_fee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/label_item_total"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="15dp"
+                    android:text="Delivery Fee" />
+
+                <TextView
+                    android:id="@+id/delivery_fee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/item_total_price"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignBaseline="@+id/label_delivery_fee"
+                    android:layout_marginTop="15dp"
+                    android:text="Rs. 299" />
+
+            <TextView
+                android:id="@+id/label_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/label_delivery_fee"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="15dp"
+                android:text="Total" />
+
+                <TextView
+                    android:id="@+id/total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/delivery_fee"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignBaseline="@+id/label_total"
+                    android:layout_marginTop="15dp"
+                    android:text="Rs. 299" />
+            </RelativeLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="place order"
+            android:id="@+id/button_place_order"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            />
+
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+                android:id="@+id/login_to_continue"
+                android:visibility="gone"
+                android:layout_margin="10dp"
+                >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login/Create Account to Place order"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/proceed_with_login"
+            android:text="Proceed with Login"
+            android:layout_margin="15dp"
+            />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

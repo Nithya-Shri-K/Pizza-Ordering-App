@@ -29,6 +29,9 @@ class AdminActivity : AppCompatActivity() {
                                 }
                 R.id.topping -> { setFragment(AdminToppingsMenuFragment())
                             drawerLayout.closeDrawers()}
+                R.id.orders ->{
+                    setFragment(OrdersFragment("admin"))
+                    drawerLayout.closeDrawers()}
                 R.id.logout ->{
                     finish()
                     startActivity(Intent(this,MainActivity::class.java))

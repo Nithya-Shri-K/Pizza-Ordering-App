@@ -1,5 +1,5 @@
 package com.example.pizzaorderingapp
 
 interface UserActionListener {
-    fun customize(selectedItem : Pizza,size : String,price:String)
+    fun startCustomizeFragment(selectedItem : Pizza, size : Size, price :Int)
 }

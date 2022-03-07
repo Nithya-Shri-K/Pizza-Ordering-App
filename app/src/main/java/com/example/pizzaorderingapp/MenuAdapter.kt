@@ -15,6 +15,7 @@ class MenuAdapter(var menu : ArrayList<Pizza>, val context : Context?,val listen
         val itemPrice: TextView = view.findViewById<TextView>(R.id.text_cost)
         val sizeSpinner: Spinner = view.findViewById<Spinner>(R.id.spinner_size)
         val addItem: Button = view.findViewById(R.id.button_add_item)
+
         fun setSizeSpinnerData(sizes: ArrayList<String>) {
             if (context != null){
                 val adapter =
@@ -48,12 +49,14 @@ class MenuAdapter(var menu : ArrayList<Pizza>, val context : Context?,val listen
         for(i in Database.listOfToppings){
             toppings.add(i.name)
         }
-        holder.addItem.setOnClickListener {
-            val size = holder.sizeSpinner.selectedItem.toString()
-            val price = holder.itemPrice.text.toString()
-            listener.customize(menu[position],size,price)
-        }
         setPrice(holder)
+
+        holder.addItem.setOnClickListener {
+            val size = Size.valueOf(holder.sizeSpinner.selectedItem.toString())
+            val price = (menu[holder.adapterPosition].sizeAndPrice[Size.valueOf(size.toString())])?.toInt() ?: 0
+            listener.startCustomizeFragment(menu[position],size,price)
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -69,7 +72,8 @@ class MenuAdapter(var menu : ArrayList<Pizza>, val context : Context?,val listen
                 id: Long
             ) {
                 val size : Size = Size.valueOf(adapterView?.getItemAtPosition(selectedSize).toString())
-               holder.itemPrice.text ="Rs. ${menu[holder.adapterPosition].sizeAndPrice[size].toString()}"
+                val price = menu[holder.adapterPosition].sizeAndPrice[size].toString()
+               holder.itemPrice.text ="Rs. $price"
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {

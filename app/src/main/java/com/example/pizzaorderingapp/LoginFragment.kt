@@ -22,11 +22,13 @@ class LoginFragment : Fragment() {
     ): View? {
         binding = FragmentLoginBinding.inflate(layoutInflater, container, false)
         binding.buttonLogin.setOnClickListener {
+            val authentication = Authentication()
             val phoneNumber = binding.phoneNumber.text.toString()
             val password = binding.password.text.toString()
-            val currentUser = Authentication().login(phoneNumber, password)
+            val currentUser = authentication.login(phoneNumber, password)
             if (currentUser != null) {
                 setFragmentResult(CURRENT_USER_KEY, bundleOf(CURRENT_USER to currentUser ) )
+
             }else{
                 Toast.makeText(context,getString(R.string.login_error_message),Toast.LENGTH_SHORT).show()
             }

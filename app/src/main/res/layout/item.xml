@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal">
 
     <ImageView
@@ -13,7 +14,7 @@
          />
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
         >
@@ -61,16 +62,14 @@
 
             />
         </LinearLayout>
-
         <Button
             android:id="@+id/button_add_item"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="Add"
-            android:layout_marginRight="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginBottom="10dp"
-            />
+            android:text="Add" />
     </LinearLayout>
 
     

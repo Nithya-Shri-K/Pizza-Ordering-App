@@ -6,10 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pizzaorderingapp.databinding.FragmentUserHomeBinding
 
-class UserHomeFragment : Fragment(),UserActionListener {
+class UserHomeFragment : Fragment() {
     private lateinit var binding : FragmentUserHomeBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -18,7 +20,19 @@ class UserHomeFragment : Fragment(),UserActionListener {
         binding = FragmentUserHomeBinding.inflate(inflater,container,false)
         val menuItems = Database.listOfItems
         val recyclerView = binding.recyclerviewMenu
-        val adapterData = MenuAdapter(menuItems, context,this)
+        val adapterData = MenuAdapter(menuItems, context, object : UserActionListener {
+
+            override fun startCustomizeFragment(selectedItem : Pizza, size : Size, price : Int) {
+                val transaction = parentFragmentManager.beginTransaction()
+                val fragment = CustomizeFragment()
+                val bundle = Bundle()
+                bundle.putSerializable("selectedItem",selectedItem)
+                bundle.putSerializable("selectedSize",size)
+                bundle.putInt("price",price)
+                fragment.arguments = bundle
+                transaction.replace(R.id.fragment_container,fragment).commit()
+            }
+        })
         recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = adapterData
@@ -30,6 +44,7 @@ class UserHomeFragment : Fragment(),UserActionListener {
         binding.switchOnlyNonveg.setOnCheckedChangeListener{ _,checked ->
             showOnlyNonVeg(checked,adapterData)
         }
+
         return binding.root
     }
     private fun showOnlyVeg(isChecked : Boolean, adapterData : MenuAdapter ){
@@ -56,13 +71,6 @@ class UserHomeFragment : Fragment(),UserActionListener {
             adapterData.notifyDataSetChanged()
         }
     }
-    override fun customize(selectedItem : Pizza,size : String,price:String) {
-        val intent = Intent(context,CustomizeActivity::class.java)
-        intent.putExtra("selectedItem",selectedItem)
-        intent.putExtra("selectedSize",size)
-        intent.putExtra("selectedPrice",price)
-        startActivity(intent)
 
-    }
 
 }

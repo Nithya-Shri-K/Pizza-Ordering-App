@@ -16,8 +16,6 @@ class ItemDialogFragment(private val listener : AdminPizzaItemsHandler, private 
     constructor(listener: AdminPizzaItemsHandler, operation: String, pizza : Pizza) : this(listener,operation)
     {
         this.selectedpizza = pizza
-
-
     }
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,9 +24,7 @@ class ItemDialogFragment(private val listener : AdminPizzaItemsHandler, private 
     ): View? {
 
         binding = FragmentItemDialogBinding.inflate(layoutInflater,container,false)
-        if(operation == EDIT){
-            setDataToEdit(selectedpizza)
-        }
+
         with(binding){
             textviewRegularPrice.isEnabled = false
             textviewMediumPrice.isEnabled = false
@@ -58,6 +54,9 @@ class ItemDialogFragment(private val listener : AdminPizzaItemsHandler, private 
                     Toast.makeText(context,getString(R.string.save_error_message),Toast.LENGTH_SHORT).show()
             }
             binding.buttonCancel.setOnClickListener { dismiss() }
+        }
+        if(operation == EDIT){
+            setDataToEdit(selectedpizza)
         }
         return binding.root
     }
@@ -104,14 +103,17 @@ class ItemDialogFragment(private val listener : AdminPizzaItemsHandler, private 
                 Size.Regular -> {
                     binding.checkboxRegular.isChecked = true
                     binding.textviewRegularPrice.setText( i.value,TextView.BufferType.EDITABLE)
+                    binding.textviewRegularPrice.isEnabled = true
                 }
                 Size.Medium -> {
                     binding.checkboxMedium.isChecked = true
                     binding.textviewMediumPrice.setText(i.value,TextView.BufferType.EDITABLE)
+                    binding.textviewMediumPrice.isEnabled = true
                 }
                 Size.Large -> {
                     binding.checkboxLarge.isChecked = true
                     binding.textviewLargePrice.setText(i.value,TextView.BufferType.EDITABLE)
+                    binding.textviewLargePrice.isEnabled = true
                 }
             }
         }

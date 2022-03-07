@@ -6,6 +6,7 @@
     <string name="close">close</string>
     <string name="login_error_message">Incorrect Phone Number or Password</string>
     <string name="save_error_message">Please enter all the required fields</string>
+    <string name="show_more">show_more</string>
     <string-array name="size">
         <item>Regular</item>
         <item>Medium</item>

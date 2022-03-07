@@ -61,14 +61,15 @@
         android:text="Regular"
         android:id="@+id/checkbox_regular"
         />
+
         <EditText
             android:id="@+id/textview_regular_price"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/checkbox_medium"
             android:layout_marginLeft="35dp"
-            android:inputType="textPersonName"
-            android:hint="Price" />
+            android:layout_toRightOf="@id/checkbox_medium"
+            android:hint="Price"
+            android:inputType="numberDecimal" />
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -83,7 +84,7 @@
             android:layout_toRightOf="@id/checkbox_medium"
             android:layout_below="@id/textview_regular_price"
             android:layout_marginLeft="35dp"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:hint="Price" />
     <CheckBox
         android:layout_width="wrap_content"
@@ -100,7 +101,7 @@
             android:layout_below="@id/textview_medium_price"
             android:layout_marginLeft="55dp"
             android:layout_toRightOf="@id/checkbox_large"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
            android:hint="Price" />
         <RelativeLayout
             android:layout_width="match_parent"

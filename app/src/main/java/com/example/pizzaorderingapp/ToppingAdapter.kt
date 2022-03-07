@@ -11,14 +11,27 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 class ToppingAdapter(val toppings : ArrayList<Topping>, private val userType : Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    lateinit var listener : AdminToppingHandler
+    lateinit var adminListener : AdminToppingHandler
+    lateinit var userListener : SelectedTopping
     constructor(toppings : ArrayList<Topping>,userType : Int, listener : AdminToppingHandler) : this(toppings,userType){
-        this.listener = listener
+        this.adminListener = listener
+    }
+    constructor(toppings : ArrayList<Topping>,userType : Int, listener : SelectedTopping) : this(toppings,userType){
+        this.userListener = listener
     }
     inner class UserToppingViewHolder(view : View) : RecyclerView.ViewHolder(view){
         val toppingName = view.findViewById<CheckBox>(R.id.topping_name)
         val toppingPrice = view.findViewById<TextView>(R.id.topping_price)
-
+        init{
+            toppingName.setOnCheckedChangeListener { compoundButton, isChecked ->
+                if(isChecked){
+                    userListener.onCheck(toppings[adapterPosition])
+                }
+                else{
+                    userListener.onUncheck(toppings[adapterPosition])
+                }
+            }
+        }
     }
     inner class AdminToppingViewHolder(view: View) : RecyclerView.ViewHolder(view)
     {
@@ -28,11 +41,11 @@ class ToppingAdapter(val toppings : ArrayList<Topping>, private val userType : I
         val delete: ImageView = view.findViewById<ImageView>(R.id.topping_delete)
         init{
             edit.setOnClickListener {
-                listener.edit(toppings[adapterPosition])
+                adminListener.edit(toppings[adapterPosition])
             }
             delete.setOnClickListener {
                 AdminHandler.removeTopping(toppings[adapterPosition].id)
-                listener.refresh()
+                adminListener.refresh()
             }
 
         }

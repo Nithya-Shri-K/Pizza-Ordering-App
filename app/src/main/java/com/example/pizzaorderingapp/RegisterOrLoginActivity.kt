@@ -12,19 +12,20 @@ class RegisterOrLoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterOrLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         binding.toolbar.root.visibility = View.GONE
         setFragment(RegisterOrLoginFragment())
-        supportFragmentManager.setFragmentResultListener(REQUEST_KEY,this){
-            requestKey,bundle ->
-            val operation = bundle.getString(OPERATION)
-            binding.toolbar.root.visibility = View.VISIBLE
-            when(operation){
+
+        supportFragmentManager.setFragmentResultListener(USER_CHOICE,this){
+                _, bundle ->
+            when(bundle.getString(OPERATION)){
                 LOGIN -> setFragment(LoginFragment())
                 REGISTER -> setFragment(RegisterFragment())
             }
+            binding.toolbar.root.visibility = View.VISIBLE
         }
         supportFragmentManager.setFragmentResultListener(CURRENT_USER_KEY,this){
-                requestKey,bundle ->
+                _, bundle ->
             intent.putExtra(CURRENT_USER,bundle.getSerializable(CURRENT_USER))
             setResult(RESULT_OK,intent)
             finish()

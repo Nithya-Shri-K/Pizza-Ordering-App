@@ -17,15 +17,6 @@
         android:textStyle="bold"
         />
     <TextView
-        android:id="@+id/price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="price"
-        android:textSize="20sp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        />
-    <TextView
         android:id="@+id/size"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,6 +25,16 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         />
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="price"
+        android:textSize="20sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        />
+
 
     <View
         android:id="@+id/divider6"
@@ -60,13 +61,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+
+            >
+            <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+                android:id="@+id/quantity"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                app:backGroundColor="@color/colorPrimary"
+                app:textSize="4sp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:layout_gravity="center_vertical"
+
+                />
+
         <Button
             android:id="@+id/add_to_cart"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="8dp"
             android:text="Add to Cart"
-            android:layout_gravity="center_horizontal"
             />
+        </LinearLayout>
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 

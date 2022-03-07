@@ -12,6 +12,7 @@ object AdminHandler {
         pizza.image = image
         pizza.category=category
         pizza.sizeAndPrice =sizeAndPrice
+
     }
     fun updateTopping(topping :Topping, name : String, price : String){
         topping.name = name
