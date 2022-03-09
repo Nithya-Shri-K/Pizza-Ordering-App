@@ -7,12 +7,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
 
-class CartAdapter(val cart : ArrayList<Item>,val listener:CartActionListener) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
-    interface CartActionListener{
-        fun refresh()
+class CartAdapter(val cart: ArrayList<Item>, val listener: CartActionListener) :
+    RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
+    interface CartActionListener {
+        fun refreshData()
     }
 
-    inner class CartViewHolder(view : View) : RecyclerView.ViewHolder(view){
+    inner class CartViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val itemName = view.findViewById<TextView>(R.id.text_title)
         val itemSize = view.findViewById<TextView>(R.id.text_size)
         val toppings = view.findViewById<TextView>(R.id.text_toppings)
@@ -21,10 +22,10 @@ class CartAdapter(val cart : ArrayList<Item>,val listener:CartActionListener) : 
         val increment = view.findViewById<TextView>(R.id.increment)
         val decrement = view.findViewById<TextView>(R.id.decrement)
 
-        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.cart_item,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.cart_item, parent, false)
         return CartViewHolder(view)
     }
 
@@ -32,7 +33,7 @@ class CartAdapter(val cart : ArrayList<Item>,val listener:CartActionListener) : 
         holder.itemName.text = cart[position].item.name
         holder.itemSize.text = cart[position].size.name
         var topping = ""
-        for(i in cart[position].toppings){
+        for (i in cart[position].toppings) {
             topping = "$topping, ${i.name}"
         }
         holder.toppings.text = topping
@@ -42,16 +43,16 @@ class CartAdapter(val cart : ArrayList<Item>,val listener:CartActionListener) : 
             val pricePerItem = cart[position].price / cart[position].quantity
             cart[position].price += pricePerItem
             cart[position].quantity += 1
-            listener.refresh()
+            listener.refreshData()
         }
         holder.decrement.setOnClickListener {
             val pricePerItem = cart[position].price / cart[position].quantity
             cart[position].price -= pricePerItem
             cart[position].quantity -= 1
-            if(cart[position].quantity == 0){
-                UserHandler.removeItemFromCart(cart,cart[position])
+            if (cart[position].quantity == 0) {
+                UserHandler.removeItemFromCart(cart, cart[position])
             }
-            listener.refresh()
+            listener.refreshData()
 
         }
 

@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import com.example.pizzaorderingapp.databinding.ActivityRegisterOrLoginBinding
 
 class RegisterOrLoginActivity : AppCompatActivity() {
-    lateinit var binding : ActivityRegisterOrLoginBinding
+    lateinit var binding: ActivityRegisterOrLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterOrLoginBinding.inflate(layoutInflater)
@@ -16,32 +16,25 @@ class RegisterOrLoginActivity : AppCompatActivity() {
         binding.toolbar.root.visibility = View.GONE
         setFragment(RegisterOrLoginFragment())
 
-        supportFragmentManager.setFragmentResultListener(USER_CHOICE,this){
-                _, bundle ->
-            when(bundle.getString(OPERATION)){
+        supportFragmentManager.setFragmentResultListener(USER_CHOICE, this) { _, bundle ->
+            when (bundle.getString(OPERATION)) {
                 LOGIN -> setFragment(LoginFragment())
                 REGISTER -> setFragment(RegisterFragment())
             }
             binding.toolbar.root.visibility = View.VISIBLE
         }
-        supportFragmentManager.setFragmentResultListener(CURRENT_USER_KEY,this){
-                _, bundle ->
-            intent.putExtra(CURRENT_USER,bundle.getSerializable(CURRENT_USER))
-            setResult(RESULT_OK,intent)
+        supportFragmentManager.setFragmentResultListener(CURRENT_USER_KEY, this) { _, bundle ->
+            intent.putExtra(CURRENT_USER, bundle.getSerializable(CURRENT_USER))
+            setResult(RESULT_OK, intent)
             finish()
 
         }
 
     }
-     private fun setFragment(fragment : Fragment){
+
+    private fun setFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.register_or_login_container,fragment).commit()
-
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-
+        transaction.replace(R.id.register_or_login_container, fragment).commit()
 
     }
 }

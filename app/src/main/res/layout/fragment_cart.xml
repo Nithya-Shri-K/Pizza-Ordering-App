@@ -50,7 +50,6 @@
                 android:id="@+id/delivery_address"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:text="30, 1st street, Moogambigai Nagar, M K Kottai,Trichy 11"
                 />
             <Button
                 android:layout_width="wrap_content"

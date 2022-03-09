@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pizzaorderingapp.databinding.FragmentOrdersBinding
-import java.nio.file.attribute.UserDefinedFileAttributeView
 
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,7 +24,7 @@ class OrdersFragment(val userType : String) : Fragment() {
     ): View? {
         binding = FragmentOrdersBinding.inflate(layoutInflater,container,false)
         if(userType == "user"){
-            val currentUser = arguments?.getSerializable("user") as Users
+            val currentUser = arguments?.getSerializable("user") as User
             val recyclerView = binding.listOfOrders
             recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,true)
             val orders = Database.listOfOrders.filter { it.userId == currentUser.id } as ArrayList<Order>

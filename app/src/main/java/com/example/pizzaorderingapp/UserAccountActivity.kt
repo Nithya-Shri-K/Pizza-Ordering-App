@@ -13,7 +13,7 @@ class UserAccountActivity : AppCompatActivity() {
         binding = ActivityUserAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val operation = intent.getStringExtra("operation")
-        val user = intent.getSerializableExtra("currentUser") as Users
+        val user = intent.getSerializableExtra("currentUser") as User
         val currentUser = Database.listOfUsers.filter{
             it.id == user.id
         }[0]
@@ -26,7 +26,7 @@ class UserAccountActivity : AppCompatActivity() {
             }
             "addressBook" -> {
                 val fragment = AddressBookFragment()
-                fragment.arguments = bundleOf("user" to currentUser)
+                fragment.arguments = bundleOf(CURRENT_USER to currentUser)
                 replaceFragment(fragment)
             }
         }

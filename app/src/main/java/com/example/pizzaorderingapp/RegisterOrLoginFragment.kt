@@ -18,16 +18,16 @@ import com.example.pizzaorderingapp.databinding.FragmentMyAccountBinding
 import com.example.pizzaorderingapp.databinding.FragmentRegisterOrLoginBinding
 
 class RegisterOrLoginFragment : Fragment() {
-    lateinit var binding : FragmentRegisterOrLoginBinding
-    private lateinit var userId : ActivityResultLauncher<Intent>
+    lateinit var binding: FragmentRegisterOrLoginBinding
+    private lateinit var userId: ActivityResultLauncher<Intent>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentRegisterOrLoginBinding.inflate(layoutInflater,container,false)
+        binding = FragmentRegisterOrLoginBinding.inflate(layoutInflater, container, false)
         binding.buttonLogin.setOnClickListener {
-        setFragmentResult(USER_CHOICE, bundleOf(OPERATION to LOGIN))
+            setFragmentResult(USER_CHOICE, bundleOf(OPERATION to LOGIN))
         }
         binding.buttonRegister.setOnClickListener {
             setFragmentResult(USER_CHOICE, bundleOf(OPERATION to REGISTER))

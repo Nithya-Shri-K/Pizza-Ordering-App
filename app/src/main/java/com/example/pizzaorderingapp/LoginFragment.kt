@@ -1,7 +1,6 @@
 package com.example.pizzaorderingapp
 
-import android.app.Activity
-import android.app.Activity.RESULT_OK
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -27,10 +26,11 @@ class LoginFragment : Fragment() {
             val password = binding.password.text.toString()
             val currentUser = authentication.login(phoneNumber, password)
             if (currentUser != null) {
-                setFragmentResult(CURRENT_USER_KEY, bundleOf(CURRENT_USER to currentUser ) )
+                setFragmentResult(CURRENT_USER_KEY, bundleOf(CURRENT_USER to currentUser))
 
-            }else{
-                Toast.makeText(context,getString(R.string.login_error_message),Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, getString(R.string.login_error_message), Toast.LENGTH_SHORT)
+                    .show()
             }
         }
         return binding.root

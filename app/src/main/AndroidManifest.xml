@@ -12,6 +12,15 @@
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
         tools:replace="android:theme">
         <activity
+            android:name=".ConfirmationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CustomizeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".UserAccountActivity"
             android:exported="false" />
         <activity

@@ -1,6 +1,6 @@
 package com.example.pizzaorderingapp
 
-interface SelectedTopping {
-    fun onCheck(topping : Topping)
+interface ToppingSelector {
+    fun onCheck(topping: Topping)
     fun onUncheck(topping: Topping)
 }

@@ -9,18 +9,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pizzaorderingapp.databinding.FragmentAdminToppingsMenuBinding
 
 
-class AdminToppingsMenuFragment : Fragment(),AdminToppingHandler {
-    lateinit var binding : FragmentAdminToppingsMenuBinding
-    lateinit var toppings : ToppingAdapter
+class AdminToppingsMenuFragment : Fragment(), AdminToppingHandler {
+    lateinit var binding: FragmentAdminToppingsMenuBinding
+    lateinit var toppings: ToppingAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAdminToppingsMenuBinding.inflate(layoutInflater,container,false)
+        binding = FragmentAdminToppingsMenuBinding.inflate(layoutInflater, container, false)
         val recyclerView = binding.recyclerviewToppings
-        toppings = ToppingAdapter(Database.listOfToppings, ADMIN,this)
-        recyclerView.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
+        toppings = ToppingAdapter(Database.listOfToppings, ADMIN, this, requireContext())
+        recyclerView.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = toppings
         binding.buttonAddTopping.setOnClickListener {
             val toppingDialogFragment = ToppingDialogFragment(this, ADD_ITEM)
@@ -36,14 +37,9 @@ class AdminToppingsMenuFragment : Fragment(),AdminToppingHandler {
     }
 
     override fun edit(topping: Topping) {
-        var addToppingDialog = ToppingDialogFragment(this, EDIT,topping)
-       addToppingDialog.show(parentFragmentManager, EDIT)
+        var addToppingDialog = ToppingDialogFragment(this, EDIT, topping)
+        addToppingDialog.show(parentFragmentManager, EDIT)
     }
-
-
-
-
-
 
 
 }

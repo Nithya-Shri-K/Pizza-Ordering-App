@@ -14,38 +14,38 @@ import com.example.pizzaorderingapp.databinding.FragmentMyAccountBinding
 
 class MyAccountFragment : Fragment() {
 
-    private lateinit var binding : FragmentMyAccountBinding
+    private lateinit var binding: FragmentMyAccountBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        val currentUser = arguments?.getSerializable("user") as Users
+        val currentUser = arguments?.getSerializable(CURRENT_USER) as User
 
-        binding = FragmentMyAccountBinding.inflate(layoutInflater,container,false)
+        binding = FragmentMyAccountBinding.inflate(layoutInflater, container, false)
         binding.userName.setText(currentUser?.name, TextView.BufferType.EDITABLE)
         binding.userPhoneno.setText(currentUser?.phoneNumber, TextView.BufferType.EDITABLE)
         binding.logout.setOnClickListener {
-        setFragmentResult(LOGOUT, bundleOf(OPERATION to LOGOUT))
+            setFragmentResult(LOGOUT, bundleOf(OPERATION to LOGOUT))
         }
         binding.orderHistory.setOnClickListener {
-            val intent = Intent(context,UserAccountActivity()::class.java)
-            intent.putExtra("operation","orderHistory")
-            intent.putExtra("currentUser",currentUser)
+            val intent = Intent(context, UserAccountActivity()::class.java)
+            intent.putExtra("operation", "orderHistory")
+            intent.putExtra("currentUser", currentUser)
             startActivity(intent)
         }
         binding.addressBook.setOnClickListener {
-            val intent = Intent(context,UserAccountActivity::class.java)
-            intent.putExtra("operation","addressBook")
+            val intent = Intent(context, UserAccountActivity::class.java)
+            intent.putExtra("operation", "addressBook")
             println("fgtyhju - 1")
-            intent.putExtra("currentUser",currentUser)
+            intent.putExtra("currentUser", currentUser)
             println("fgtyhju - $currentUser")
             startActivity(intent)
             println("fgtyhju - 3")
         }
 
-       return binding.root
+        return binding.root
     }
 
 }
