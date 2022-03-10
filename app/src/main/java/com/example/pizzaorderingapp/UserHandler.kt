@@ -5,6 +5,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 object UserHandler {
+
     fun createUser(
         firstname: String,
         lastname: String,
@@ -25,10 +26,6 @@ object UserHandler {
 
     fun addToCart(user: User, item: Item) {
         user.cart.add(item)
-    }
-
-    fun removeItemFromCart(cart: ArrayList<Item>, item: Item) {
-        cart.remove(item)
     }
 
     fun placeOrder(
@@ -55,11 +52,6 @@ object UserHandler {
 
     }
 
-    fun clearCart(userId: Int) {
-        val user = Database.listOfUsers.filter { it.id == userId }[0]
-        user.cart.clear()
-    }
-
     fun addAddress(currentUser: User, title: String, address: String) {
         val address = Address(title, address)
         currentUser.address.add(address)
@@ -68,5 +60,24 @@ object UserHandler {
     fun removeAddress(address: Address, addressBook: ArrayList<Address>) {
         addressBook.remove(address)
 
+    }
+
+    fun createItem(
+        selectedItem: Pizza,
+        quantity: Int,
+        selectedToppings: ArrayList<Topping>,
+        selectedSize: Size,
+        totalPrice: Int
+    ): Item {
+        return Item(selectedItem, quantity, selectedToppings, selectedSize, totalPrice)
+    }
+
+    fun removeItemFromCart(cart: ArrayList<Item>, item: Item) {
+        cart.remove(item)
+    }
+
+    private fun clearCart(userId: Int) {
+        val user = Database.listOfUsers.filter { it.id == userId }[0]
+        user.cart.clear()
     }
 }

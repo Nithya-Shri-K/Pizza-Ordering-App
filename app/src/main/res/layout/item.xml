@@ -69,7 +69,8 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="10dp"
-            android:text="Add" />
+            android:text="Add"
+            android:backgroundTint="@color/red"/>
     </LinearLayout>
 
     

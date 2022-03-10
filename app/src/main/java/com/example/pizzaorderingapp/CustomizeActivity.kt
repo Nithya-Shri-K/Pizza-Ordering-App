@@ -26,7 +26,7 @@ class CustomizeActivity : AppCompatActivity(), ToppingSelector {
         setToppings()
         with(binding) {
             addToCart.setOnClickListener {
-                val item = CartItemsHandler.createItem(
+                val item = UserHandler.createItem(
                     selectedItem,
                     itemQuantity,
                     selectedToppings,
@@ -52,7 +52,7 @@ class CustomizeActivity : AppCompatActivity(), ToppingSelector {
 
     private fun setToppings() {
         val recyclerView = binding.recyclerviewToppings
-        val toppings = ToppingAdapter(Database.listOfToppings, USER, this, this)
+        val toppings = ToppingAdapter(Database.listOfToppings, USER_TYPE_USER, this, this)
         recyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = toppings
@@ -84,8 +84,7 @@ class CustomizeActivity : AppCompatActivity(), ToppingSelector {
             binding.quantity.text = itemQuantity.toString()
             setTotalPrice()
         } else {
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment_container, UserHomeFragment()).commit()
+            finish()
         }
     }
 

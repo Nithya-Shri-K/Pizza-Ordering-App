@@ -14,7 +14,7 @@ import com.example.pizzaorderingapp.databinding.FragmentAdminPizzaMenuBinding
 import com.google.android.material.navigation.NavigationView
 
 
-class AdminPizzaMenuFragment : Fragment(),AdminPizzaItemsHandler {
+class AdminPizzaMenuFragment : Fragment(), AdminPizzaItemsHandler {
     lateinit var binding: FragmentAdminPizzaMenuBinding
     lateinit var menu: PizzaMenuAdapter
 
@@ -24,7 +24,7 @@ class AdminPizzaMenuFragment : Fragment(),AdminPizzaItemsHandler {
     ): View? {
         binding = FragmentAdminPizzaMenuBinding.inflate(layoutInflater, container, false)
         val recyclerView = binding.recyclerviewMenuItems
-         menu =
+        menu =
             PizzaMenuAdapter(Database.listOfItems, activity?.applicationContext, this, PIZZA)
         recyclerView.layoutManager =
             LinearLayoutManager(activity?.application, LinearLayoutManager.VERTICAL, false)

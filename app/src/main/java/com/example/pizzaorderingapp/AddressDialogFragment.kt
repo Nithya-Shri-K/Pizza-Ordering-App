@@ -10,7 +10,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.pizzaorderingapp.databinding.FragmentAddressDialogBinding
 
 
-class AddressDialogFragment(val currentUser: User, val listener: addressHandlerListener) :
+class AddressDialogFragment(val currentUser: User, val listener: AddressHandlerListener) :
     DialogFragment() {
     lateinit var binding: FragmentAddressDialogBinding
     override fun onCreateView(

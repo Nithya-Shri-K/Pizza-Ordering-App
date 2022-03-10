@@ -12,21 +12,33 @@ object Database {
         Category.NonVeg
     )
     val pizza3 = Pizza(
-        "Chicken pizza",
+        "Chicken Tikka Supreme",
         R.drawable.tandooripaneer,
         mutableMapOf(Size.Regular to "599", Size.Large to "799"),
         Category.NonVeg
     )
-    val listOfItems = arrayListOf<Pizza>(
-        pizza1, pizza2, pizza3
+    val pizza4 = Pizza(
+        "Veggie Supreme",
+        R.drawable.tandooripaneer,
+        mutableMapOf(Size.Regular to "399", Size.Medium to "499", Size.Large to "799"),
+        Category.Veg
     )
-    val listOfToppings = arrayListOf<Topping>(Topping("cheese", 50), Topping("mushrooms", 100))
+    val listOfItems = arrayListOf<Pizza>(
+        pizza1, pizza2, pizza3, pizza4
+    )
+    val listOfToppings = arrayListOf<Topping>(
+        Topping("Cheese", 50),
+        Topping("Mushrooms", 70),
+        Topping("Green Capsicum", 50),
+        Topping("Red Paprika", 50),
+        Topping("Chicken Balls", 100)
+    )
     val listOfUsers = arrayListOf<User>(
         User(
             "Nithya",
             "7904788454",
             "Nithya",
-            arrayListOf(Address("home", "30, 1st street, Moogambigai Nagar, M K Kottai,Trichy 11")),
+            arrayListOf(Address("Home", "30, 1st street, Moogambigai Nagar, M K Kottai,Trichy 11")),
             arrayListOf(),
             false
         ),

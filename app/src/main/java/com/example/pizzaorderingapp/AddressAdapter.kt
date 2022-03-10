@@ -7,22 +7,28 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import org.w3c.dom.Text
 
 class AddressAdapter(val addressBook: ArrayList<Address>, val isClickable: Boolean) :
     RecyclerView.Adapter<AddressAdapter.AddressViewHolder>() {
-    interface AddressAdapterListener {
-        fun onAddressSelected(address: Address)
-        fun refresh()
-    }
 
-    lateinit var listener: AddressAdapterListener
+    lateinit var selector: AddressSelectorListener
+    lateinit var listener: AddressHandlerListener
 
     constructor(
         addressBook: ArrayList<Address>,
         isClickable: Boolean,
-        listener: AddressAdapterListener
+        listener: AddressHandlerListener
     ) : this(addressBook, isClickable) {
+        this.listener = listener
+    }
+
+    constructor(
+        addressBook: ArrayList<Address>,
+        isClickable: Boolean,
+        selector: AddressSelectorListener,
+        listener: AddressHandlerListener
+    ) : this(addressBook, isClickable) {
+        this.selector = selector
         this.listener = listener
     }
 
@@ -36,11 +42,10 @@ class AddressAdapter(val addressBook: ArrayList<Address>, val isClickable: Boole
         init {
             if (isClickable) {
                 addressCard.setOnClickListener {
-                    listener.onAddressSelected(addressBook[adapterPosition])
+                    selector.onAddressSelected(addressBook[adapterPosition])
                 }
             }
             deleteAddress.setOnClickListener {
-                //val address = addressBook[adapterPosition]
                 UserHandler.removeAddress(addressBook[adapterPosition], addressBook)
                 listener.refresh()
 

@@ -11,9 +11,10 @@
     <string name="delivery_address_error">please select a delivery address to proceed</string>
     <string name="add_to_cart">Add to Cart Rs. %1$s</string>
 
-    <string-array name="size">
-        <item>Regular</item>
-        <item>Medium</item>
-        <item>Large</item>
+
+    <string-array name="status">
+        <item>Waiting</item>
+        <item>Accepted</item>
+        <item>Delivered</item>
     </string-array>
 </resources>

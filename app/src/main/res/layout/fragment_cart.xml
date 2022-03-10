@@ -45,17 +45,22 @@
                 android:layout_height="wrap_content"
                 android:text="Delivery Address"
                 android:textStyle="bold"
+                android:textColor="@color/black"
                 />
             <TextView
                 android:id="@+id/delivery_address"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 />
-            <Button
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="select address"
+                android:textSize="13sp"
+                android:padding="0dp"
                 android:id="@+id/button_select_address"
+                android:textColor="@color/red"
                 />
 
 
@@ -68,13 +73,15 @@
                 android:layout_margin="10dp"
 
                 >
-                <TextView
-                    android:id="@+id/label_bill_details"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Bill Details"
-                    android:textStyle="bold"
-                    />
+
+            <TextView
+                android:id="@+id/label_bill_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bill Details"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/label_item_total"
@@ -83,7 +90,9 @@
                     android:layout_below="@+id/label_bill_details"
                     android:layout_alignParentLeft="true"
                     android:layout_marginTop="15dp"
-                    android:text="item Total" />
+                    android:textSize="15sp"
+                    android:text="item Total"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/item_total_price"
@@ -91,7 +100,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/label_item_total"
                     android:layout_alignParentRight="true"
-                    android:text="Rs. 299" />
+                    android:textSize="15sp"
+                    android:text="Rs. 299"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/label_delivery_fee"
@@ -100,7 +111,9 @@
                     android:layout_below="@+id/label_item_total"
                     android:layout_alignParentLeft="true"
                     android:layout_marginTop="15dp"
-                    android:text="Delivery Fee" />
+                    android:textSize="15sp"
+                    android:text="Delivery Fee"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/delivery_fee"
@@ -110,7 +123,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignBaseline="@+id/label_delivery_fee"
                     android:layout_marginTop="15dp"
-                    android:text="Rs. 299" />
+                    android:textSize="15sp"
+                    android:text="Rs. 299"
+                    android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/label_total"
@@ -119,7 +134,9 @@
                 android:layout_below="@+id/label_delivery_fee"
                 android:layout_alignParentLeft="true"
                 android:layout_marginTop="15dp"
-                android:text="Total" />
+                android:textSize="15sp"
+                android:text="Total"
+                android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/total"
@@ -129,7 +146,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignBaseline="@+id/label_total"
                     android:layout_marginTop="15dp"
-                    android:text="Rs. 299" />
+                    android:text="Rs. 299"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"/>
             </RelativeLayout>
         <Button
             android:layout_width="match_parent"
@@ -138,10 +157,11 @@
             android:id="@+id/button_place_order"
             android:layout_marginRight="25dp"
             android:layout_marginLeft="25dp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/red"
             />
 
-
-            <LinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -154,12 +174,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Login/Create Account to Place order"
+            android:textColor="@color/black"
             />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/proceed_with_login"
             android:text="Proceed with Login"
+            android:backgroundTint="@color/red"
+            android:textColor="@color/white"
             android:layout_margin="15dp"
             />
         </LinearLayout>

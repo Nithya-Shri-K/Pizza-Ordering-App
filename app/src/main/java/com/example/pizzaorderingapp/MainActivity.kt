@@ -11,18 +11,18 @@ import com.example.pizzaorderingapp.databinding.ActivityMainBinding
 
 const val CURRENT_USER = "currentUser"
 const val CURRENT_USER_KEY = "currentUserKey"
-const val REQUEST_KEY = "requestKey"
 const val OPERATION = "operation"
 const val LOGIN = "login"
 const val REGISTER = "register"
 const val LOGOUT = "logout"
-const val ADMIN = 0
-const val USER = 1
+const val USER_TYPE_ADMIN = 1
+const val USER_TYPE_USER = 0
+const val ADMIN = "admin"
+const val USER = "user"
 const val PIZZA = "pizza"
 const val ADD_ITEM = "addItem"
 const val EDIT = "edit"
 const val USER_CHOICE = "userChoice"
-const val CART_ITEM = "cartItem"
 const val SELECTED_ITEM = "selectedItem"
 const val SELECTED_SIZE = "selectedSize"
 const val IS_LOGGED_IN = "isLoggedIn"
@@ -30,6 +30,8 @@ const val ITEM_PRICE = "itemPrice"
 const val CART = "cart"
 const val ORDER_ID = "orderId"
 const val ORDER_AMOUNT = "orderAmount"
+const val ORDER_HISTORY = "orderHistory"
+const val ADDRESS_BOOK = "addressBook"
 
 
 class MainActivity : AppCompatActivity() {

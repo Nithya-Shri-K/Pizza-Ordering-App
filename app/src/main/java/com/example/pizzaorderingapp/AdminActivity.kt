@@ -34,7 +34,7 @@ class AdminActivity : AppCompatActivity() {
                     drawerLayout.closeDrawers()
                 }
                 R.id.orders -> {
-                    setFragment(OrdersFragment("admin"))
+                    setFragment(OrdersFragment(ADMIN))
                     drawerLayout.closeDrawers()
                 }
                 R.id.logout -> {

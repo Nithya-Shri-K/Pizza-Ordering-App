@@ -19,7 +19,7 @@ class AdminToppingsMenuFragment : Fragment(), AdminToppingHandler {
     ): View? {
         binding = FragmentAdminToppingsMenuBinding.inflate(layoutInflater, container, false)
         val recyclerView = binding.recyclerviewToppings
-        toppings = ToppingAdapter(Database.listOfToppings, ADMIN, this, requireContext())
+        toppings = ToppingAdapter(Database.listOfToppings, USER_TYPE_ADMIN, this, requireContext())
         recyclerView.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = toppings

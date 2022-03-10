@@ -79,7 +79,7 @@ class ToppingAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == ADMIN) {
+        if (viewType == USER_TYPE_ADMIN) {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.topping, parent, false)
             return AdminToppingViewHolder(view)
         } else {
@@ -90,7 +90,7 @@ class ToppingAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (getItemViewType(position) == ADMIN) {
+        if (getItemViewType(position) == USER_TYPE_ADMIN) {
             val viewHolder = holder as AdminToppingViewHolder
             viewHolder.toppingName.text = toppings[position].name
             viewHolder.toppingPrice.text = toppings[position].price.toString()
@@ -108,10 +108,9 @@ class ToppingAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (userType == ADMIN)
-            ADMIN
+        return if (userType == USER_TYPE_ADMIN)
+            USER_TYPE_ADMIN
         else
-            USER
-
+            USER_TYPE_USER
     }
 }

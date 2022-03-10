@@ -31,18 +31,15 @@ class MyAccountFragment : Fragment() {
         }
         binding.orderHistory.setOnClickListener {
             val intent = Intent(context, UserAccountActivity()::class.java)
-            intent.putExtra("operation", "orderHistory")
-            intent.putExtra("currentUser", currentUser)
+            intent.putExtra(OPERATION, ORDER_HISTORY)
+            intent.putExtra(CURRENT_USER, currentUser)
             startActivity(intent)
         }
         binding.addressBook.setOnClickListener {
             val intent = Intent(context, UserAccountActivity::class.java)
-            intent.putExtra("operation", "addressBook")
-            println("fgtyhju - 1")
-            intent.putExtra("currentUser", currentUser)
-            println("fgtyhju - $currentUser")
+            intent.putExtra(OPERATION, ADDRESS_BOOK)
+            intent.putExtra(CURRENT_USER, currentUser)
             startActivity(intent)
-            println("fgtyhju - 3")
         }
 
         return binding.root

@@ -13,7 +13,8 @@ class ConfirmationActivity : AppCompatActivity() {
         binding.backButton.setOnClickListener {
             finish()
         }
-        binding.orderId.text = intent.getIntExtra("id",0).toString()
-        binding.orderAmount.text = intent.getIntExtra("orderAmount",0).toString()
+        binding.orderId.text = intent.getIntExtra(ORDER_ID, 0).toString()
+        binding.orderAmount.text =
+            getString(R.string.price_prefix, intent.getIntExtra(ORDER_AMOUNT, 0).toString())
     }
 }

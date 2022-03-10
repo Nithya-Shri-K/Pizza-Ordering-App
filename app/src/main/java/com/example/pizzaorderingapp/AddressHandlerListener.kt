@@ -1,5 +1,5 @@
 package com.example.pizzaorderingapp
 
-interface addressHandlerListener {
+interface AddressHandlerListener {
     fun refresh()
 }

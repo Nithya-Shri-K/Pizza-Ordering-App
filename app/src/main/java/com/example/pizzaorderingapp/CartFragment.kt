@@ -7,13 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.os.bundleOf
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pizzaorderingapp.databinding.FragmentCartBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
-class CartFragment : Fragment(), CartAdapter.CartActionListener, addressHandlerListener {
+class CartFragment : Fragment(), CartAdapter.CartActionListener {
     lateinit var binding: FragmentCartBinding
     lateinit var adapterData: CartAdapter
     lateinit var user: User
@@ -46,6 +46,7 @@ class CartFragment : Fragment(), CartAdapter.CartActionListener, addressHandlerL
             (activity as MainActivity).binding.navigation.selectedItemId = R.id.my_account
         }
         binding.buttonPlaceOrder.setOnClickListener {
+
             val order = UserHandler.placeOrder(
                 user.cart,
                 totalPrice,
@@ -57,6 +58,7 @@ class CartFragment : Fragment(), CartAdapter.CartActionListener, addressHandlerL
             intent.putExtra(ORDER_ID, order.orderId)
             intent.putExtra(ORDER_AMOUNT, order.totalPrice)
             startActivity(intent)
+
         }
         binding.buttonPlaceOrder.isEnabled = deliveryAddress.isNotEmpty()
         binding.buttonSelectAddress.setOnClickListener {
@@ -65,25 +67,33 @@ class CartFragment : Fragment(), CartAdapter.CartActionListener, addressHandlerL
             val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerview_address_book)
             val dialog = BottomSheetDialog(requireContext())
             addressBookData =
-                AddressAdapter(user.address, true, object : AddressAdapter.AddressAdapterListener {
-                    override fun onAddressSelected(address: Address) {
-                        deliveryAddress = address.completeAddress
-                        binding.deliveryAddress.text = deliveryAddress
-                        dialog.dismiss()
-                        binding.buttonPlaceOrder.isEnabled = true
-                    }
+                AddressAdapter(
+                    user.address,
+                    true,
+                    object : AddressSelectorListener {
+                        override fun onAddressSelected(address: Address) {
+                            deliveryAddress = address.completeAddress
+                            binding.deliveryAddress.text = deliveryAddress
+                            dialog.dismiss()
+                            binding.buttonPlaceOrder.isEnabled = true
+                        }
 
-                    override fun refresh() {
-                        addressBookData.notifyDataSetChanged()
-                    }
-
-                })
+                    }, object : AddressHandlerListener {
+                        override fun refresh() {
+                            addressBookData.notifyDataSetChanged()
+                        }
+                    })
             recyclerView.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             recyclerView.adapter = addressBookData
             val addAddress = view.findViewById<TextView>(R.id.button_add_address)
             addAddress.setOnClickListener {
-                val addAddress = AddressDialogFragment(user, this)
+                val addAddress = AddressDialogFragment(user, object : AddressHandlerListener {
+
+                    override fun refresh() {
+                        addressBookData.notifyDataSetChanged()
+                    }
+                })
                 addAddress.show(parentFragmentManager, "add Address")
             }
             dialog.setContentView(view)
@@ -173,10 +183,5 @@ class CartFragment : Fragment(), CartAdapter.CartActionListener, addressHandlerL
             } else
                 setEmptyCartVisibility()
         }
-    }
-
-    override fun refresh() {
-
-        addressBookData.notifyDataSetChanged()
     }
 }

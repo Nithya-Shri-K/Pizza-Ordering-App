@@ -15,23 +15,32 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class OrdersFragment(val userType : String) : Fragment() {
-    lateinit var binding : FragmentOrdersBinding
+class OrdersFragment(val userType: String) : Fragment() {
+    lateinit var binding: FragmentOrdersBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentOrdersBinding.inflate(layoutInflater,container,false)
-        if(userType == "user"){
-            val currentUser = arguments?.getSerializable("user") as User
+        binding = FragmentOrdersBinding.inflate(layoutInflater, container, false)
+        if (userType == USER) {
+
+            val currentUser = arguments?.getSerializable(CURRENT_USER) as User
             val recyclerView = binding.listOfOrders
-            recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,true)
-            val orders = Database.listOfOrders.filter { it.userId == currentUser.id } as ArrayList<Order>
-            recyclerView.adapter = OrdersAdapter(orders,"user")
+            recyclerView.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
+            val orders =
+                Database.listOfOrders.filter { it.userId == currentUser.id } as ArrayList<Order>
+            if (orders.isNotEmpty()) {
+                setOrdersHistoryScreen()
+                recyclerView.adapter = OrdersAdapter(orders, USER)
+            } else {
+                setEmptyOrdersScreen()
+            }
             binding.selectDate.visibility = View.GONE
-        }
-        else {
+
+
+        } else {
             val myFormat = "dd-MM-yyyy"
             val formattedDate = SimpleDateFormat(myFormat, Locale.UK)
             val myCalender = Calendar.getInstance()
@@ -46,10 +55,8 @@ class OrdersFragment(val userType : String) : Fragment() {
 
             }
 
-
             recyclerView.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
-            //recyclerView.adapter = OrdersAdapter(Database.listOfOrders,"admin")
 
             binding.selectDate.setText(
                 formattedDate.format(myCalender.time),
@@ -63,30 +70,49 @@ class OrdersFragment(val userType : String) : Fragment() {
                     myCalender.get(Calendar.MONTH),
                     myCalender.get(Calendar.DAY_OF_MONTH)
                 ).show()
-
             }
         }
-
-
-
         return binding.root
     }
-    fun filterOrders(date : Date,recyclerView: RecyclerView){
+
+
+    private fun filterOrders(date: Date, recyclerView: RecyclerView) {
 
         val myFormat = "dd-MM-yyyy"
-        val formattedDate = SimpleDateFormat(myFormat,Locale.UK)
+        val formattedDate = SimpleDateFormat(myFormat, Locale.UK)
         val selectedDate = formattedDate.format(date)
         println(selectedDate)
         val orders = Database.listOfOrders.filter {
-            it.date.compareTo(selectedDate) == 0 } as ArrayList<Order>
-        println(orders)
-        recyclerView.adapter = OrdersAdapter(orders,"admin")
-    }
-    fun updateText(myCalender: Calendar){
-        val myFormat = "dd-MM-yyyy"
-        println("updateText")
-        val formattedDate = SimpleDateFormat(myFormat,Locale.UK)
-        binding.selectDate.setText(formattedDate.format(myCalender.time), TextView.BufferType.EDITABLE)
+            it.date.compareTo(selectedDate) == 0
+        } as ArrayList<Order>
+        setOrdersHistoryScreen()
+        recyclerView.adapter = OrdersAdapter(orders, ADMIN)
 
+
+    }
+
+    private fun setEmptyOrdersScreen() {
+        with(binding) {
+            ordersHistoryView.visibility = View.GONE
+            noOrdersView.visibility = View.VISIBLE
+        }
+
+    }
+
+    private fun setOrdersHistoryScreen() {
+        with(binding) {
+            ordersHistoryView.visibility = View.VISIBLE
+            noOrdersView.visibility = View.GONE
+        }
+
+    }
+
+    private fun updateText(myCalender: Calendar) {
+        val myFormat = "dd-MM-yyyy"
+        val formattedDate = SimpleDateFormat(myFormat, Locale.UK)
+        binding.selectDate.setText(
+            formattedDate.format(myCalender.time),
+            TextView.BufferType.EDITABLE
+        )
     }
 }

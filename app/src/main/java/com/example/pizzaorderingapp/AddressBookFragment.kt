@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pizzaorderingapp.databinding.FragmentAddressBookBinding
 
 
-class AddressBookFragment : Fragment(), addressHandlerListener,AddressAdapter.AddressAdapterListener {
+class AddressBookFragment : Fragment(), AddressHandlerListener {
     lateinit var binding: FragmentAddressBookBinding
     lateinit var addressBook: AddressAdapter
 
@@ -27,17 +27,13 @@ class AddressBookFragment : Fragment(), addressHandlerListener,AddressAdapter.Ad
         }
 
         val recyclerView = binding.recyclerviewAddressBook
-        addressBook = AddressAdapter(currentUser.address, false,this)
+        addressBook = AddressAdapter(currentUser.address, false, this)
         recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = addressBook
 
 
         return binding.root
-    }
-
-    override fun onAddressSelected(address: Address) {
-
     }
 
     override fun refresh() {

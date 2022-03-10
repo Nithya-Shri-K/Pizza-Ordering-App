@@ -32,11 +32,12 @@ class CartAdapter(val cart: ArrayList<Item>, val listener: CartActionListener) :
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         holder.itemName.text = cart[position].item.name
         holder.itemSize.text = cart[position].size.name
-        var topping = ""
+        var topping = arrayListOf<String>()
         for (i in cart[position].toppings) {
-            topping = "$topping, ${i.name}"
+            topping.add(i.name)
         }
-        holder.toppings.text = topping
+        if (topping.isNotEmpty())
+            holder.toppings.text = topping.toString()
         holder.quantity.text = cart[position].quantity.toString()
         holder.price.text = "Rs. ${cart[position].price.toString()}"
         holder.increment.setOnClickListener {
@@ -53,9 +54,7 @@ class CartAdapter(val cart: ArrayList<Item>, val listener: CartActionListener) :
                 UserHandler.removeItemFromCart(cart, cart[position])
             }
             listener.refreshData()
-
         }
-
     }
 
     override fun getItemCount(): Int {
