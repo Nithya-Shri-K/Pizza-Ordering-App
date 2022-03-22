@@ -63,7 +63,6 @@ class CartFragment : Fragment(),CartActionListener {
         binding.buttonPlaceOrder.isEnabled = deliveryAddress.isNotEmpty()
         binding.buttonSelectAddress.setOnClickListener {
 
-            val view = layoutInflater.inflate(R.layout.fragment_address_book, null)
             val addressBinding = FragmentAddressBookBinding.inflate(LayoutInflater.from(context))
             val recyclerView = addressBinding.recyclerviewAddressBook
             val dialog = BottomSheetDialog(requireContext())
@@ -87,43 +86,44 @@ class CartFragment : Fragment(),CartActionListener {
                         }
                     }, requireContext()
                 )
-            recyclerView.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             recyclerView.adapter = addressBookData
-            val addAddress = view.findViewById<TextView>(R.id.button_add_address)
+            val addAddress = addressBinding.buttonAddAddress
             addAddress.setOnClickListener {
-                val addAddress = AddressDialogFragment(userId, object : AddressHandlerListener {
+                val addAddressDialog = AddressDialogFragment(userId, object : AddressHandlerListener {
 
                     override fun refreshAddressList() {
                         addressBookData.addressBook = databaseHelper.getUserAddress(userId)
                         addressBookData.notifyDataSetChanged()
                     }
                 })
-                addAddress.show(parentFragmentManager, "add Address")
+                addAddressDialog.show(parentFragmentManager, ADD_ADDRESS)
             }
-            dialog.setContentView(view)
+            dialog.setContentView(addressBinding.root)
             dialog.show()
-
         }
 
         return binding.root
     }
 
-    fun setCart() {
+    private fun setCart() {
+        with(binding) {
 
-        binding.deliveryAddress.visibility = View.GONE
-        binding.labelDeliveryAddress.visibility = View.GONE
-        binding.buttonSelectAddress.visibility = View.GONE
-        val listOfItems = databaseHelper.getCartItems(userId)
-        if (listOfItems.isNotEmpty()) {
-            binding.loginToContinue.visibility = View.VISIBLE
-            binding.buttonPlaceOrder.visibility = View.GONE
-            setCartVisibility()
-            setCartAdapter(listOfItems)
-            setCartBillDetails(listOfItems)
-        } else
-            setEmptyCartVisibility()
+            deliveryAddress.visibility = View.GONE
+            labelDeliveryAddress.visibility = View.GONE
+            buttonSelectAddress.visibility = View.GONE
 
+            val listOfItems = databaseHelper.getCartItems(userId)
+            if (listOfItems.isNotEmpty()) {
+                loginToContinue.visibility = View.VISIBLE
+                buttonPlaceOrder.visibility = View.GONE
+                setCartVisibility()
+                setCartAdapter(listOfItems)
+                setCartBillDetails(listOfItems)
+            } else {
+                setEmptyCartVisibility()
+            }
+        }
     }
 
     private fun setUserCart() {
@@ -165,7 +165,7 @@ class CartFragment : Fragment(),CartActionListener {
 
     private fun setCartBillDetails(cart: MutableList<Item>) {
         var total = 0
-        var deliveryFee = 50
+        val deliveryFee = 50
         for (item in cart) {
             total += item.price
         }
@@ -176,7 +176,6 @@ class CartFragment : Fragment(),CartActionListener {
     }
 
     private fun setCartAdapter(listOfItems: MutableList<Item>) {
-
 
         val recyclerView = binding.cartRecyclerView
         recyclerView.layoutManager =

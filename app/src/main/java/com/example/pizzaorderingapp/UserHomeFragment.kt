@@ -54,7 +54,6 @@ class UserHomeFragment : Fragment() {
         binding.defaultValues.setOnClickListener {
             databaseHelper.insertDefaultValues()
             adapterData.menu = databaseHelper.getPizza()
-            //adapterData.notifyDataSetChanged()
             binding.defaultValues.isEnabled = false
         }
 

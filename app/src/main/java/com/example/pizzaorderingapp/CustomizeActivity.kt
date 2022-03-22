@@ -14,7 +14,7 @@ class CustomizeActivity : AppCompatActivity(), ToppingSelector {
     var itemQuantity = 1
     lateinit var binding: ActivityCustomizeBinding
     lateinit var databaseHelper: DatabaseHelper
-    //var price = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCustomizeBinding.inflate(layoutInflater)
@@ -24,7 +24,6 @@ class CustomizeActivity : AppCompatActivity(), ToppingSelector {
         val selectedItemId = intent.getIntExtra(SELECTED_PIZZA_ID,0)
         val selectedSize = intent.getSerializableExtra(SELECTED_SIZE) as Size
         var price = intent.getIntExtra(ITEM_PRICE, 0)
-        val currentUserId = intent.getIntExtra(CURRENT_USER_ID,0)
         itemPrice = price
         setSelectedItemDetail(selectedItemId, selectedSize, price)
         showAvailableToppings()
@@ -40,9 +39,6 @@ class CustomizeActivity : AppCompatActivity(), ToppingSelector {
                     selectedToppings,
                     databaseHelper
                 )
-
-
-                println("ItemId $itemId")
                 intent.putExtra(SELECTED_ITEM_ID,itemId)
                 setResult(RESULT_OK, intent)
                 finish()
@@ -64,10 +60,9 @@ class CustomizeActivity : AppCompatActivity(), ToppingSelector {
     private fun showAvailableToppings() {
         val databaseHelper = DatabaseHelper(this)
         val recyclerView = binding.recyclerviewToppings
-        val toppings = ToppingAdapter(databaseHelper.getToppings(), USER_TYPE_USER, this, this)
+        val toppings = UserToppingAdapter(databaseHelper.getToppings(), this, this)
 
-        recyclerView.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = toppings
     }
 
@@ -83,14 +78,14 @@ class CustomizeActivity : AppCompatActivity(), ToppingSelector {
         setTotalPrice()
 
     }
-    fun onQuantityIncrement(price: Int) {
+   private fun onQuantityIncrement(price: Int) {
         itemQuantity +=1
         itemPrice = (price) * itemQuantity
         binding.quantity.text = itemQuantity.toString()
         setTotalPrice()
     }
 
-    fun onQuantityDecrement(price: Int) {
+    private fun onQuantityDecrement(price: Int) {
         itemQuantity -= 1
         if (itemQuantity > 0) {
             itemPrice = (price) * itemQuantity

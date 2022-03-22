@@ -51,7 +51,7 @@ class ToppingDialogFragment(
 
     private fun setDataToEdit(topping: Topping) {
         binding.toppingName.setText(topping.name, TextView.BufferType.EDITABLE)
-        binding.toppingPrice.setText(topping.price, TextView.BufferType.EDITABLE)
+        binding.toppingPrice.setText(topping.price.toString(), TextView.BufferType.EDITABLE)
     }
 
     private fun save() {

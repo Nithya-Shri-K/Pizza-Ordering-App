@@ -11,7 +11,7 @@ import com.example.pizzaorderingapp.databinding.FragmentAdminToppingsMenuBinding
 
 class AdminToppingsMenuFragment : Fragment(), AdminToppingHandler {
     private lateinit var binding: FragmentAdminToppingsMenuBinding
-    private lateinit var listOfToppings: ToppingAdapter
+    private lateinit var listOfToppings: AdminToppingAdapter
     private lateinit var databaseHelper: DatabaseHelper
 
     override fun onCreateView(
@@ -22,7 +22,7 @@ class AdminToppingsMenuFragment : Fragment(), AdminToppingHandler {
         binding = FragmentAdminToppingsMenuBinding.inflate(layoutInflater, container, false)
         databaseHelper = DatabaseHelper(requireContext())
         val recyclerView = binding.recyclerviewToppings
-        listOfToppings = ToppingAdapter(databaseHelper.getToppings(), USER_TYPE_ADMIN, this, requireContext())
+        listOfToppings = AdminToppingAdapter(databaseHelper.getToppings(), this, requireContext())
         recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = listOfToppings
         binding.buttonAddTopping.setOnClickListener {
