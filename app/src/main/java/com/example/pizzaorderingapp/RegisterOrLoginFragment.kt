@@ -19,7 +19,6 @@ import com.example.pizzaorderingapp.databinding.FragmentRegisterOrLoginBinding
 
 class RegisterOrLoginFragment : Fragment() {
     lateinit var binding: FragmentRegisterOrLoginBinding
-    private lateinit var userId: ActivityResultLauncher<Intent>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

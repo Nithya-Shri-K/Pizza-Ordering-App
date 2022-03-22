@@ -10,74 +10,78 @@ object UserHandler {
         firstname: String,
         lastname: String,
         phoneNumber: String,
-        password: String
-    ): User {
-        val user = User(
-            "$firstname $lastname",
-            phoneNumber,
-            password,
-            arrayListOf(),
-            arrayListOf(),
-            false
-        )
-        Database.listOfUsers.add(user)
-        return user
+        password: String,
+        databaseHelper: DatabaseHelper
+    ): Int {
+        val userId = databaseHelper.insertUsers("$firstname $lastname", phoneNumber, password, 0)
+        return userId
     }
 
-    fun addToCart(user: User, item: Item) {
-        user.cart.add(item)
+    fun addToCart(userId: Int,itemId: Int,databaseHelper: DatabaseHelper) {
+       databaseHelper.insertCartData(userId,itemId)
     }
 
     fun placeOrder(
-        items: ArrayList<Item>,
+        userId: Int,
         totalPrice: Int,
         status: Status,
-        userId: Int,
-        deliveryAddress: String
-    ): Order {
-        val listOfItems = arrayListOf<Item>()
-        for (item in items) {
-            listOfItems.add(item)
-        }
+        deliveryAddress: Int,
+        databaseHelper: DatabaseHelper
+    ): Int {
         val currentDate = Calendar.getInstance().time
         val myFormat = "dd-MM-yyyy"
         val formattedDate = SimpleDateFormat(myFormat, Locale.UK)
         val selectedDate = formattedDate.format(currentDate)
-
-        val order =
-            Order(listOfItems, totalPrice, Status.Waiting, selectedDate, userId, deliveryAddress)
-        Database.listOfOrders.add(order)
-        clearCart(userId)
-        return order
-
+        val orderId = databaseHelper.insertOrderData(
+            userId,
+            totalPrice,
+            status.name,
+            selectedDate,
+            deliveryAddress
+        )
+        clearCart(userId, databaseHelper)
+        return orderId
     }
 
-    fun addAddress(currentUser: User, title: String, address: String) {
-        val address = Address(title, address)
-        currentUser.address.add(address)
+    fun addAddress(
+        currentUserId: Int,
+        addressTag: String,
+        address: String,
+        databaseHelper: DatabaseHelper
+    ) {
+        val addressId = databaseHelper.insertAddress(address, addressTag)
+        databaseHelper.insertUserAddress(currentUserId, addressId)
     }
 
-    fun removeAddress(address: Address, addressBook: ArrayList<Address>) {
-        addressBook.remove(address)
-
+    fun removeAddress(addressId: Int, databaseHelper: DatabaseHelper) {
+        databaseHelper.deleteAddress(addressId)
     }
+
 
     fun createItem(
-        selectedItem: Pizza,
+        pizzaId: Int,
         quantity: Int,
-        selectedToppings: ArrayList<Topping>,
         selectedSize: Size,
-        totalPrice: Int
-    ): Item {
-        return Item(selectedItem, quantity, selectedToppings, selectedSize, totalPrice)
+        totalPrice: Int,
+        toppingsSelected: ArrayList<Int>,
+        databaseHelper: DatabaseHelper
+    ): Int {
+        val itemId = databaseHelper.insertItemData(
+            pizzaId,
+            quantity,
+            selectedSize,
+            totalPrice,
+            toppingsSelected
+        )
+        return itemId
     }
 
-    fun removeItemFromCart(cart: ArrayList<Item>, item: Item) {
-        cart.remove(item)
+    fun removeItemFromCart(itemId: Int, databaseHelper: DatabaseHelper) {
+        databaseHelper.deleteItemFromCart(itemId)
     }
 
-    private fun clearCart(userId: Int) {
-        val user = Database.listOfUsers.filter { it.id == userId }[0]
-        user.cart.clear()
+    fun clearCart(userId: Int, databaseHelper: DatabaseHelper) {
+        databaseHelper.deleteCart(userId)
+
     }
 }

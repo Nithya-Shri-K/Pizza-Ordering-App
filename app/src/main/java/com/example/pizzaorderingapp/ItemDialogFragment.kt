@@ -1,5 +1,7 @@
 package com.example.pizzaorderingapp
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
 import com.example.pizzaorderingapp.databinding.FragmentItemDialogBinding
 
@@ -16,6 +19,7 @@ class ItemDialogFragment(
 ) : DialogFragment() {
     private lateinit var selectedpizza: Pizza
     private lateinit var binding: FragmentItemDialogBinding
+    var imagePath = ""
 
     constructor(listener: AdminPizzaItemsHandler, operation: String, pizza: Pizza) : this(
         listener,
@@ -31,6 +35,17 @@ class ItemDialogFragment(
     ): View? {
 
         binding = FragmentItemDialogBinding.inflate(layoutInflater, container, false)
+
+        val getImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK && it.data != null) {
+                val imageFilePath = it.data?.data
+                binding.itemImage.setImageURI(imageFilePath)
+                println("pppppp")
+                imagePath = imageFilePath?.path.toString()
+
+
+            }
+        }
 
         with(binding) {
             textviewRegularPrice.isEnabled = false
@@ -52,7 +67,7 @@ class ItemDialogFragment(
                     binding.textviewLargePrice.setText("", TextView.BufferType.EDITABLE)
             }
 
-            binding.buttonSave.setOnClickListener {
+            buttonSave.setOnClickListener {
                 if (itemName.text.isNotEmpty() && radiobuttonCategory.checkedRadioButtonId != -1 && ((checkboxRegular.isChecked && textviewRegularPrice.text.isNotEmpty()) || (checkboxMedium.isChecked && textviewMediumPrice.text.isNotEmpty()) || (checkboxLarge.isChecked && textviewLargePrice.text.isNotEmpty())))
                     saveItem()
                 else
@@ -62,7 +77,14 @@ class ItemDialogFragment(
                         Toast.LENGTH_SHORT
                     ).show()
             }
-            binding.buttonCancel.setOnClickListener { dismiss() }
+            buttonCancel.setOnClickListener { dismiss() }
+            uploadImage.setOnClickListener {
+                val intent = Intent()
+                intent.type = "image/*"
+                intent.action = Intent.ACTION_GET_CONTENT
+                getImage.launch(intent)
+
+            }
         }
         if (operation == EDIT) {
             setDataToEdit(selectedpizza)
@@ -88,23 +110,32 @@ class ItemDialogFragment(
             sizeAndPrice[Size.valueOf(sizeMedium.text.toString())] = priceMedium.text.toString()
         if (sizeLarge.isChecked)
             sizeAndPrice[Size.valueOf(sizeLarge.text.toString())] = priceLarge.text.toString()
+
+//        val image = BitmapFactory.decodeFile(imagePath)
+//        val stream = ByteArrayOutputStream()
+//        image.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+//        val imageInByte: ByteArray = stream.toByteArray()
         if (operation == ADD_ITEM) {
-            AdminHandler.addItem(
-                name,
+//            val pizza = AdminHandler.addPizza(
+//                name,
+//                R.drawable.tandooripaneer,
+//                sizeAndPrice,
+//                Category.valueOf(category)
+//            )
+            AdminHandler.addPizza(name,
                 R.drawable.tandooripaneer,
-                sizeAndPrice,
-                Category.valueOf(category)
-            )
-            listener.refresh()
+                Category.valueOf(category),
+                sizeAndPrice,requireContext())
+            listener.refreshPizzaList()
         } else {
-            AdminHandler.updateItem(
-                selectedpizza,
+            AdminHandler.updatePizza(
+                selectedpizza.id,
                 name,
                 R.drawable.tandooripaneer,
                 sizeAndPrice,
-                Category.valueOf(category)
+                Category.valueOf(category),requireContext()
             )
-            listener.refresh()
+            listener.refreshPizzaList()
         }
         dismiss()
     }

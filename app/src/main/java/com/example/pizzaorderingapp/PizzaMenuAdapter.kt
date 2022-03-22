@@ -1,8 +1,6 @@
 package com.example.pizzaorderingapp
 
-import android.content.ClipData
 import android.content.Context
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +8,13 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 
 class PizzaMenuAdapter(
-    val items: ArrayList<Pizza>,
+    var items: ArrayList<Pizza>,
     val context: Context?,
     val listener: AdminPizzaItemsHandler,
     val menuType: String
 ) : RecyclerView.Adapter<PizzaMenuAdapter.PizzaViewHolder>() {
     inner class PizzaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val id: TextView = view.findViewById<TextView>(R.id.item_id)
+
         val name: TextView = view.findViewById<TextView>(R.id.item_name)
         val size: Spinner = view.findViewById<Spinner>(R.id.item_size)
         val price: TextView = view.findViewById<TextView>(R.id.item_price)
@@ -26,18 +24,18 @@ class PizzaMenuAdapter(
 
         init {
             edit.setOnClickListener {
-                listener.edit(items[adapterPosition])
+                listener.editPizza(items[adapterPosition])
             }
             delete.setOnClickListener {
-                AdminHandler.removeItem(items[adapterPosition].id)
-                listener.refresh()
+                AdminHandler.removePizza(items[adapterPosition].id, context!!)
+                listener.refreshPizzaList()
             }
         }
 
         fun setSizesSpinnerData(sizes: ArrayList<String>) {
             if (context != null) {
                 val adapter = ArrayAdapter<String>(context, R.layout.spinner_text, sizes)
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+               // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 size.adapter = adapter
             }
         }
@@ -52,7 +50,7 @@ class PizzaMenuAdapter(
 
     override fun onBindViewHolder(holder: PizzaViewHolder, position: Int) {
 
-        holder.id.text = items[position].id.toString()
+
         holder.name.text = items[position].name
         holder.category.text = items[position].category.name
         val sizeAndPrice = items[position].sizeAndPrice.entries

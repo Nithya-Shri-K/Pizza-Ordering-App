@@ -21,24 +21,26 @@ class MyAccountFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val currentUser = arguments?.getSerializable(CURRENT_USER) as User
-
         binding = FragmentMyAccountBinding.inflate(layoutInflater, container, false)
-        binding.userName.setText(currentUser?.name, TextView.BufferType.EDITABLE)
-        binding.userPhoneno.setText(currentUser?.phoneNumber, TextView.BufferType.EDITABLE)
+        val databaseHelper = DatabaseHelper(requireContext())
+        val currentUserId = arguments?.getInt(CURRENT_USER_ID)
+        val user = currentUserId?.let { databaseHelper.getUser(it) }
+
+        binding.userName.setText(user?.name, TextView.BufferType.EDITABLE)
+        binding.userPhoneno.setText(user?.phoneNumber, TextView.BufferType.EDITABLE)
         binding.logout.setOnClickListener {
             setFragmentResult(LOGOUT, bundleOf(OPERATION to LOGOUT))
         }
         binding.orderHistory.setOnClickListener {
             val intent = Intent(context, UserAccountActivity()::class.java)
             intent.putExtra(OPERATION, ORDER_HISTORY)
-            intent.putExtra(CURRENT_USER, currentUser)
+            intent.putExtra(CURRENT_USER_ID, currentUserId)
             startActivity(intent)
         }
         binding.addressBook.setOnClickListener {
             val intent = Intent(context, UserAccountActivity::class.java)
             intent.putExtra(OPERATION, ADDRESS_BOOK)
-            intent.putExtra(CURRENT_USER, currentUser)
+            intent.putExtra(CURRENT_USER_ID, currentUserId)
             startActivity(intent)
         }
 

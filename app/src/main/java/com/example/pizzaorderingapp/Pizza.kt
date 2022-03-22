@@ -8,9 +8,5 @@ data class Pizza(
     var image: Int,
     var sizeAndPrice: MutableMap<Size, String>,
     var category: Category,
-    var id: Int = ++idCreator
-) : Serializable {
-    companion object {
-        var idCreator = 0
-    }
-}
+    var id: Int
+)

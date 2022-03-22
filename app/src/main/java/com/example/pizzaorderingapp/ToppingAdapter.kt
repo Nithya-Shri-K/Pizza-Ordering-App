@@ -8,10 +8,11 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pizzaorderingapp.databinding.ToppingBinding
 
 
 class ToppingAdapter(
-    val toppings: ArrayList<Topping>,
+    var toppingsList: MutableList<Topping>,
     private val userType: Int,
     val context: Context
 ) :
@@ -20,12 +21,12 @@ class ToppingAdapter(
     lateinit var userListener: ToppingSelector
 
     constructor(
-        toppings: ArrayList<Topping>,
+        toppingsList: MutableList<Topping>,
         userType: Int,
         listener: AdminToppingHandler,
         context: Context
     ) : this(
-        toppings,
+        toppingsList,
         userType,
         context
     ) {
@@ -33,12 +34,12 @@ class ToppingAdapter(
     }
 
     constructor(
-        toppings: ArrayList<Topping>,
+        toppingsList:MutableList<Topping>,
         userType: Int,
         listener: ToppingSelector,
         context: Context
     ) : this(
-        toppings,
+        toppingsList,
         userType,
         context
     ) {
@@ -52,9 +53,9 @@ class ToppingAdapter(
         init {
             toppingName.setOnCheckedChangeListener { compoundButton, isChecked ->
                 if (isChecked) {
-                    userListener.onCheck(toppings[adapterPosition])
+                    userListener.onToppingSelected(toppingsList[adapterPosition])
                 } else {
-                    userListener.onUncheck(toppings[adapterPosition])
+                    userListener.onToppingDeselected(toppingsList[adapterPosition])
                 }
             }
         }
@@ -65,14 +66,15 @@ class ToppingAdapter(
         val toppingPrice: TextView = view.findViewById<TextView>(R.id.price)
         val edit: ImageView = view.findViewById<ImageView>(R.id.topping_edit)
         val delete: ImageView = view.findViewById<ImageView>(R.id.topping_delete)
+        val databaseHelper = DatabaseHelper(context)
 
         init {
             edit.setOnClickListener {
-                adminListener.edit(toppings[adapterPosition])
+                adminListener.editTopping(toppingsList[adapterPosition])
             }
             delete.setOnClickListener {
-                AdminHandler.removeTopping(toppings[adapterPosition].id)
-                adminListener.refresh()
+                AdminHandler.removeTopping(toppingsList[adapterPosition].id,databaseHelper)
+                adminListener.refreshToppingList()
             }
 
         }
@@ -80,11 +82,13 @@ class ToppingAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == USER_TYPE_ADMIN) {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.topping, parent, false)
-            return AdminToppingViewHolder(view)
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.topping, parent, false)
+                return AdminToppingViewHolder(view)
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.topping_selector, parent, false)
+
             return UserToppingViewHolder(view)
         }
     }
@@ -92,19 +96,19 @@ class ToppingAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (getItemViewType(position) == USER_TYPE_ADMIN) {
             val viewHolder = holder as AdminToppingViewHolder
-            viewHolder.toppingName.text = toppings[position].name
-            viewHolder.toppingPrice.text = toppings[position].price.toString()
+            viewHolder.toppingName.text = toppingsList[position].name
+            viewHolder.toppingPrice.text = toppingsList[position].price.toString()
 
         } else {
             val viewHolder = holder as UserToppingViewHolder
-            val price = toppings[position].price.toString()
-            viewHolder.toppingName.text = toppings[position].name
+            val price = toppingsList[position].price.toString()
+            viewHolder.toppingName.text = toppingsList[position].name
             viewHolder.toppingPrice.text = context.getString(R.string.price_prefix, price)
         }
     }
 
     override fun getItemCount(): Int {
-        return toppings.size
+        return toppingsList.size
     }
 
     override fun getItemViewType(position: Int): Int {

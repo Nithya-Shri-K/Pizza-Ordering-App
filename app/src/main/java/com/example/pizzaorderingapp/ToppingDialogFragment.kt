@@ -1,7 +1,6 @@
 package com.example.pizzaorderingapp
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ class ToppingDialogFragment(
     private val operation: String
 ) : DialogFragment() {
     lateinit var topping: Topping
+    lateinit var databaseHelper: DatabaseHelper
 
     constructor(listener: AdminToppingHandler, operation: String, topping: Topping) : this(
         listener,
@@ -31,6 +31,7 @@ class ToppingDialogFragment(
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentToppingDialogBinding.inflate(layoutInflater, container, false)
+        databaseHelper = DatabaseHelper(requireContext())
         if (operation == EDIT) {
             setDataToEdit(topping)
         }
@@ -57,10 +58,10 @@ class ToppingDialogFragment(
         val toppingName = binding.toppingName.text.toString()
         val price = binding.toppingPrice.text.toString().toInt()
         if (operation == ADD_ITEM) {
-            AdminHandler.addTopping(toppingName, price)
+            AdminHandler.addTopping(toppingName, price,databaseHelper)
         } else
-            AdminHandler.updateTopping(topping, toppingName, price)
-        listener.refresh()
+            AdminHandler.updateTopping(topping.id, toppingName, price,databaseHelper)
+        listener.refreshToppingList()
         dismiss()
     }
 }

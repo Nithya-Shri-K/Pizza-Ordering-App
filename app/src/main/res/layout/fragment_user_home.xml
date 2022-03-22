@@ -8,6 +8,7 @@
     tools:context=".UserHomeFragment">
 
    <include
+       android:id="@+id/toolbar_header"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        layout="@layout/toolbar_home"
@@ -34,13 +35,21 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="25dp"/>
 
+     <ImageView
+         android:id="@+id/default_values"
+         android:layout_width="25dp"
+         android:layout_height="30dp"
+         android:layout_alignParentRight="true"
+         android:layout_marginTop="25dp"
+         android:src="@drawable/ic_baseline_edit_24" />
+
+
     </RelativeLayout>
  <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recyclerview_menu"
-
-        />
+     />
 
 
 

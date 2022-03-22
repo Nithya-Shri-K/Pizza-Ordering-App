@@ -9,12 +9,15 @@ class ConfirmationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityConfirmationBinding.inflate(layoutInflater)
+        val databaseHelper = DatabaseHelper(this)
         setContentView(binding.root)
         binding.backButton.setOnClickListener {
             finish()
         }
-        binding.orderId.text = intent.getIntExtra(ORDER_ID, 0).toString()
+        val orderId = intent.getIntExtra(ORDER_ID, 0)
+        val orderAmount = databaseHelper.getOrderTotalAmount(orderId)
+        binding.orderId.text = orderId.toString()
         binding.orderAmount.text =
-            getString(R.string.price_prefix, intent.getIntExtra(ORDER_AMOUNT, 0).toString())
+            getString(R.string.price_prefix, orderAmount.toString())
     }
 }

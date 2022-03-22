@@ -1,12 +1,16 @@
 package com.example.pizzaorderingapp
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ItemAdapter(val items: ArrayList<Item>) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+class ItemAdapter(val items: ArrayList<Item>, val context: Context) :
+    RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+    val databaseHelper = DatabaseHelper(context)
+
     inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val itemName: TextView = view.findViewById<TextView>(R.id.item_name)
 
@@ -19,7 +23,8 @@ class ItemAdapter(val items: ArrayList<Item>) : RecyclerView.Adapter<ItemAdapter
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.itemName.text = "${items[position].quantity} x ${items[position].item.name}"
+        val pizzaName = databaseHelper.getPizzaName(items[position].pizzaId)
+        holder.itemName.text = "${items[position].quantity} x $pizzaName"
 
     }
 

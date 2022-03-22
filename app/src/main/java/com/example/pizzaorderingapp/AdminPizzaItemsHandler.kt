@@ -1,6 +1,6 @@
 package com.example.pizzaorderingapp
 
 interface AdminPizzaItemsHandler {
-    fun refresh()
-    fun edit(pizza: Pizza)
+    fun refreshPizzaList()
+    fun editPizza(pizza: Pizza)
 }

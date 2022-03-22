@@ -1,11 +1,15 @@
 package com.example.pizzaorderingapp
 
 class Authentication {
-    fun login(phoneNumber: String, password: String): User? {
-        val account = Database.listOfUsers.filter { it.phoneNumber == phoneNumber }
-        if (account.isNotEmpty() && account[0].password == password) {
-            return account[0]
-        }
-        return null
+    fun login(phoneNumber: String, password: String, databaseHelper: DatabaseHelper): Int {
+        val userId = databaseHelper.isAccountExist(phoneNumber)
+        return if (userId != -1) {
+            val accountPassword = databaseHelper.getPassword(userId)
+            if (password == accountPassword)
+                userId
+            else
+                INVALID_PASSWORD
+        } else
+            INVALID_ACCOUNT
     }
 }

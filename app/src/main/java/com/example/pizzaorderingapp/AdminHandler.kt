@@ -1,50 +1,45 @@
 package com.example.pizzaorderingapp
 
+import android.content.Context
+
 object AdminHandler {
 
-    fun addItem(
+    fun addPizza(
+        name: String,
+        image: Int,
+        category: Category,
+        sizeAndPrice: MutableMap<Size, String>,
+        context: Context
+    ) {
+        DatabaseHelper(context).insertPizza(name, image, category, sizeAndPrice)
+    }
+
+    fun updatePizza(
+        pizzaId: Int,
         name: String,
         image: Int,
         sizeAndPrice: MutableMap<Size, String>,
-        category: Category
+        category: Category, context: Context
     ) {
-        val item = Pizza(name, image, sizeAndPrice, category)
-        Database.listOfItems.add(item)
 
+        DatabaseHelper(context).updatePizza(pizzaId, name, image, category, sizeAndPrice)
     }
 
-    fun updateItem(
-        pizza: Pizza,
-        name: String,
-        image: Int,
-        sizeAndPrice: MutableMap<Size, String>,
-        category: Category
-    ) {
-        pizza.name = name
-        pizza.image = image
-        pizza.category = category
-        pizza.sizeAndPrice = sizeAndPrice
 
+    fun removePizza(id: Int, context: Context) {
+        DatabaseHelper(context).deletePizza(id)
     }
 
-    fun updateTopping(topping: Topping, name: String, price: Int) {
-        topping.name = name
-        topping.price = price
+    fun updateTopping(toppingId: Int, name: String, price: Int, databaseHelper: DatabaseHelper) {
+        databaseHelper.updateTopping(toppingId, name, price)
     }
 
-    fun removeItem(id: Int) {
-        val pizzaToRemove: Pizza = Database.listOfItems.filter { item -> item.id == id }[0]
-        Database.listOfItems.remove(pizzaToRemove)
+    fun addTopping(name: String, price: Int, databaseHelper: DatabaseHelper) {
+        databaseHelper.insertTopping(name, price)
     }
 
-    fun addTopping(name: String, price: Int) {
-        val topping = Topping(name, price)
-        Database.listOfToppings.add(topping)
-    }
-
-    fun removeTopping(id: Int) {
-        val toppingToRemove: Topping = Database.listOfToppings.filter { item -> item.id == id }[0]
-        Database.listOfToppings.remove(toppingToRemove)
+    fun removeTopping(id: Int, databaseHelper: DatabaseHelper) {
+        databaseHelper.deleteTopping(id)
     }
 
 

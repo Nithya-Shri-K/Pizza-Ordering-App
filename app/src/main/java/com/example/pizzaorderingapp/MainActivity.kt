@@ -32,49 +32,68 @@ const val ORDER_ID = "orderId"
 const val ORDER_AMOUNT = "orderAmount"
 const val ORDER_HISTORY = "orderHistory"
 const val ADDRESS_BOOK = "addressBook"
+const val CURRENT_USER_ID = "userId"
+const val SELECTED_PIZZA_ID = "selectedPizzaId"
+const val SELECTED_ITEM_ID = "selectedItemId"
+const val ADD_ADDRESS = "addAddress"
+const val INVALID_ACCOUNT = -1
+const val INVALID_PASSWORD = 0
 
 
 class MainActivity : AppCompatActivity() {
+
     lateinit var binding: ActivityMainBinding
-    lateinit var currentUser: User
+    lateinit var databaseHelper: DatabaseHelper
+    private var currentUserId: Int = 0
     var isLoggedIn = 0
-    var cart = arrayListOf<Item>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        databaseHelper = DatabaseHelper(this)
+
         val getUser =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == RESULT_OK) {
-                    val user = result.data?.getSerializableExtra(CURRENT_USER) as User
-                    setUserAndNavigateToAccount(user)
+                    val userId = result.data?.getIntExtra(CURRENT_USER_ID, -1)
+                    if (userId != -1 && userId != null)
+                        setUserAndNavigateToAccount(userId)
                 }
             }
+
         supportFragmentManager.setFragmentResultListener(LOGOUT, this) { _, bundle ->
             if (bundle.getString(OPERATION) == LOGOUT) {
                 isLoggedIn = 0
-                cart.clear()
+                currentUserId = 0
                 replaceFragment(UserHomeFragment())
             }
         }
 
-        supportFragmentManager.setFragmentResultListener(SELECTED_ITEM, this) { _, bundle ->
+        supportFragmentManager.setFragmentResultListener(SELECTED_ITEM_ID, this) { _, bundle ->
 
-            val item = bundle.getSerializable(SELECTED_ITEM) as Item
-            addItemToCart(item)
+            val itemId = bundle.getInt(SELECTED_ITEM_ID)
+            addItemToCart(itemId, databaseHelper)
 
         }
         val getSelectedItemFromSearchActivity =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
                 if (result.resultCode == RESULT_OK) {
-                    val item = result.data?.getSerializableExtra(SELECTED_ITEM) as Item
-                    addItemToCart(item)
+                    val itemId = result.data?.getIntExtra(SELECTED_ITEM_ID, 0)
+                    if (itemId != null) {
+                        addItemToCart(itemId, databaseHelper)
+                    }
+                    binding.navigation.selectedItemId = R.id.cart
                 }
             }
 
         binding.navigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.home -> replaceFragment(UserHomeFragment())
+                R.id.home -> {
+                    val fragment = UserHomeFragment()
+                    fragment.arguments = bundleOf(CURRENT_USER_ID to currentUserId)
+                    replaceFragment(fragment)
+                }
                 R.id.search -> {
                     val intent = Intent(this, SearchActivity::class.java)
                     getSelectedItemFromSearchActivity.launch(intent)
@@ -83,10 +102,9 @@ class MainActivity : AppCompatActivity() {
                     val cartFragment = CartFragment()
                     val cartBundle = Bundle()
                     cartBundle.putInt(IS_LOGGED_IN, isLoggedIn)
-                    if (isLoggedIn == 1)
-                        cartBundle.putSerializable(CURRENT_USER, currentUser)
-                    else
-                        cartBundle.putSerializable(CART, cart)
+                    if (isLoggedIn == 1) {
+                        cartBundle.putInt(CURRENT_USER_ID, currentUserId)
+                    }
                     cartFragment.arguments = cartBundle
                     replaceFragment(cartFragment)
                 }
@@ -96,7 +114,7 @@ class MainActivity : AppCompatActivity() {
                         getUser.launch(intent)
                     } else {
                         val fragment = MyAccountFragment()
-                        fragment.arguments = bundleOf(CURRENT_USER to currentUser)
+                        fragment.arguments = bundleOf(CURRENT_USER_ID to currentUserId)
                         replaceFragment(fragment)
                     }
                 }
@@ -105,29 +123,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun addItemToCart(item: Item) {
-        if (isLoggedIn == 1) {
-            UserHandler.addToCart(currentUser, item)
-            binding.navigation.selectedItemId = R.id.cart
-        } else {
-            cart.add(item)
-            binding.navigation.selectedItemId = R.id.cart
-        }
+    override fun onStart() {
+        super.onStart()
+        binding.navigation.selectedItemId = R.id.home
+
     }
 
-    private fun setUserAndNavigateToAccount(user: User) {
+    private fun addItemToCart(itemId: Int, databaseHelper: DatabaseHelper) {
+        UserHandler.addToCart(currentUserId, itemId, databaseHelper)
+        binding.navigation.selectedItemId = R.id.cart
+    }
+
+    private fun setUserAndNavigateToAccount(userId: Int) {
         isLoggedIn = 1
-        currentUser = Database.listOfUsers.filter { it.id == user.id }[0]
-        if (currentUser.isAdmin) {
+        currentUserId = userId
+        val isAdmin = databaseHelper.getUserType(userId)
+        if (isAdmin == 1) {
             startActivity(Intent(this, AdminActivity::class.java))
             finish()
         } else {
-            if (cart.isNotEmpty()) {
-                for (item in cart)
-                    currentUser.cart.add(item)
-            }
+            databaseHelper.updateCartUserId(currentUserId)
             val fragment = MyAccountFragment()
-            fragment.arguments = bundleOf(CURRENT_USER to currentUser)
+            fragment.arguments = bundleOf(CURRENT_USER_ID to currentUserId)
             replaceFragment(fragment)
         }
     }
@@ -137,10 +154,6 @@ class MainActivity : AppCompatActivity() {
         transaction.replace(R.id.fragment_container, fragment).commit()
     }
 
-    override fun onStart() {
-        super.onStart()
-        binding.navigation.selectedItemId = R.id.home
-    }
 
 
 }

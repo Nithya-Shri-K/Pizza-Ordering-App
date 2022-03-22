@@ -19,6 +19,7 @@ import kotlin.collections.ArrayList
 class UserHomeFragment : Fragment() {
 
     private lateinit var binding: FragmentUserHomeBinding
+    private lateinit var databaseHelper: DatabaseHelper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,27 +27,36 @@ class UserHomeFragment : Fragment() {
     ): View? {
 
         binding = FragmentUserHomeBinding.inflate(inflater, container, false)
-        val menuItems = Database.listOfItems
+        databaseHelper = DatabaseHelper(requireContext())
+        val currentUserId = arguments?.getInt(CURRENT_USER_ID)
+        val menuItems = databaseHelper.getPizza()
         val recyclerView = binding.recyclerviewMenu
         val getItem =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
                 if (result.resultCode == RESULT_OK) {
-                    val item = result.data?.getSerializableExtra(SELECTED_ITEM) as Item
-                    setFragmentResult(SELECTED_ITEM, bundleOf(SELECTED_ITEM to item))
+                    val itemId = result.data?.getIntExtra(SELECTED_ITEM_ID, 0)
+                    setFragmentResult(SELECTED_ITEM_ID, bundleOf(SELECTED_ITEM_ID to itemId))
                 }
 
             }
         val adapterData = MenuAdapter(menuItems, context, object : UserActionListener {
 
-            override fun startCustomizeFragment(selectedItem: Pizza, size: Size, price: Int) {
+            override fun startCustomizeFragment(selectedPizzaId: Int, size: Size, price: Int) {
 
                 val intent = Intent(context, CustomizeActivity::class.java)
-                intent.putExtra(SELECTED_ITEM, selectedItem)
+                intent.putExtra(SELECTED_PIZZA_ID, selectedPizzaId)
                 intent.putExtra(SELECTED_SIZE, size)
                 intent.putExtra(ITEM_PRICE, price)
+                intent.putExtra(CURRENT_USER_ID, currentUserId)
                 getItem.launch(intent)
             }
         })
+        binding.defaultValues.setOnClickListener {
+            databaseHelper.insertDefaultValues()
+            adapterData.menu = databaseHelper.getPizza()
+            //adapterData.notifyDataSetChanged()
+            binding.defaultValues.isEnabled = false
+        }
 
         recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -66,12 +76,13 @@ class UserHomeFragment : Fragment() {
     private fun showOnlyVeg(isChecked: Boolean, adapterData: MenuAdapter) {
         if (isChecked) {
             binding.switchOnlyNonveg.isEnabled = false
+            val listOfItems = databaseHelper.getPizza()
             adapterData.menu =
-                Database.listOfItems.filter { it.category == Category.Veg } as ArrayList<Pizza>
+                listOfItems.filter { it.category == Category.Veg } as ArrayList<Pizza>
             adapterData.notifyDataSetChanged()
         } else {
             binding.switchOnlyNonveg.isEnabled = true
-            adapterData.menu = Database.listOfItems
+            adapterData.menu = databaseHelper.getPizza()
             adapterData.notifyDataSetChanged()
         }
     }
@@ -79,12 +90,13 @@ class UserHomeFragment : Fragment() {
     private fun showOnlyNonVeg(isChecked: Boolean, adapterData: MenuAdapter) {
         if (isChecked) {
             binding.switchOnlyVeg.isEnabled = false
+            val listOfItems = databaseHelper.getPizza()
             adapterData.menu =
-                Database.listOfItems.filter { it.category == Category.NonVeg } as ArrayList<Pizza>
+                listOfItems.filter { it.category == Category.NonVeg } as ArrayList<Pizza>
             adapterData.notifyDataSetChanged()
         } else {
             binding.switchOnlyVeg.isEnabled = true
-            adapterData.menu = Database.listOfItems
+            adapterData.menu = databaseHelper.getPizza()
             adapterData.notifyDataSetChanged()
         }
     }

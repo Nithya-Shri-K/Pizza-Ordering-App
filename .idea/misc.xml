@@ -3,11 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/nithya-12554/.gradle/caches/transforms-3/742fcde9f4e141836de4bc590d847843/transformed/appcompat-1.4.1/res/layout/support_simple_spinner_dropdown_item.xml" value="0.134765625" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/drawable/button_quantity.xml" value="0.14517374517374518" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/drawable/buttons.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/activity_admin.xml" value="0.1" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/activity_confirmation.xml" value="0.134765625" />
-        <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/activity_customize.xml" value="0.134765625" />
+        <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/activity_customize.xml" value="0.1" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/activity_login_screen.xml" value="0.134765625" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/activity_main.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/activity_register_or_login.xml" value="0.134765625" />
@@ -15,8 +16,8 @@
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/activity_user_account.xml" value="0.134765625" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/activity_user_order_history.xml" value="0.134765625" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/address.xml" value="0.134765625" />
-        <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/admin_menu_items.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/cart_item.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/admin_menu_items.xml" value="0.22" />
+        <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/cart_item.xml" value="0.1" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/fragment_address_book.xml" value="0.12421875" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/fragment_address_dialog.xml" value="0.134765625" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/fragment_admin_menu.xml" value="0.134765625" />
@@ -41,6 +42,7 @@
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/fragment_topping_dialog.xml" value="0.12421875" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/fragment_toppings.xml" value="0.12421875" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/fragment_user_home.xml" value="0.134765625" />
+        <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/increment_decrement_button.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/item.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/item_in_order.xml" value="0.134765625" />
         <entry key="..\:/Users/nithya-12554/AndroidStudioProjects/PizzaOrderingApp/app/src/main/res/layout/order.xml" value="0.22" />

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/address_card"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="10dp"
-    android:id="@+id/card_address">
+   >
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -13,24 +14,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Title"
-        android:id="@+id/address_title"
+        android:id="@+id/address_tag"
         android:layout_marginBottom="8dp"
         />
 
     <TextView
-        android:id="@+id/address"
+        android:id="@+id/complete_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/address_title"
+        android:layout_below="@+id/address_tag"
         android:layout_marginBottom="8dp"
         android:text="30, 1st street, Moogambigai Nagar, M K Kottai,Trichy 11" />
 
     <ImageView
-        android:id="@+id/delete"
+        android:id="@+id/delete_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_delete"
-        android:layout_below="@+id/address"
+        android:layout_below="@+id/complete_address"
 
         />
 
@@ -38,7 +39,7 @@
         android:id="@+id/divider1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/delete"
+        android:layout_below="@+id/delete_address"
         android:layout_marginTop="15dp"
         android:background="?android:attr/listDivider" />
 

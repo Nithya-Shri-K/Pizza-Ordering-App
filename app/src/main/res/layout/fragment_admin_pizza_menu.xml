@@ -20,7 +20,6 @@
         android:id="@+id/pizza_table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:stretchColumns="*"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
@@ -29,24 +28,14 @@
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:text="Item Id"
-                android:gravity="left|center_vertical"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                />
+
             <TextView
 
                 android:layout_width="0dp"
-                android:layout_weight="7"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
                 android:text="Item Name"
-                android:paddingLeft="10dp"
                 android:gravity="left|center_vertical"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -54,7 +43,7 @@
             <TextView
                 android:textSize="13sp"
                 android:layout_width="0dp"
-                android:layout_weight="4"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Size"
                 android:paddingLeft="10dp"
@@ -64,7 +53,7 @@
                 />
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:paddingLeft="10dp"
                 android:layout_height="wrap_content"
                 android:text="Price"
@@ -76,7 +65,7 @@
             <TextView
 
                 android:layout_width="0dp"
-                android:layout_weight="4"
+                android:layout_weight="1"
                 android:paddingLeft="10dp"
                 android:layout_height="wrap_content"
                 android:text="Category"
@@ -87,8 +76,7 @@
                 />
             <TextView
 
-                android:layout_width="0dp"
-                android:layout_weight="2"
+                android:layout_width="20dp"
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
                 android:gravity="left|center_vertical"
@@ -97,8 +85,7 @@
                 />
             <TextView
 
-                android:layout_width="0dp"
-                android:layout_weight="2"
+                android:layout_width="20dp"
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
                 android:gravity="left|center_vertical"

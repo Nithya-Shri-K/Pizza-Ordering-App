@@ -1,11 +1,13 @@
 package com.example.pizzaorderingapp
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import java.io.ByteArrayInputStream
 
 class MenuAdapter(
     var menu: ArrayList<Pizza>,
@@ -45,8 +47,10 @@ class MenuAdapter(
     }
 
     override fun onBindViewHolder(holder: MenuAdapter.MenuItemViewHolder, position: Int) {
+//        val imageStream = ByteArrayInputStream(menu[position].image)
+//        val theImage = BitmapFactory.decodeStream(imageStream)
 
-        holder.itemImage.setImageResource(menu[position].image)
+        holder.itemImage.setImageResource(R.drawable.tandooripaneer)
         holder.itemTitle.text = menu[position].name
         val sizesAndPrice = menu[position].sizeAndPrice.entries
         val sizes = ArrayList<String>()
@@ -55,7 +59,8 @@ class MenuAdapter(
         }
         holder.setSizeSpinnerData(sizes)
         val toppings = ArrayList<String>()
-        for (i in Database.listOfToppings) {
+        val databaseHelper = DatabaseHelper(context!!)
+        for (i in databaseHelper.getToppings()) {
             toppings.add(i.name)
         }
         setPrice(holder)
@@ -65,7 +70,7 @@ class MenuAdapter(
             val price =
                 (menu[holder.adapterPosition].sizeAndPrice[Size.valueOf(size.toString())])?.toInt()
                     ?: 0
-            listener.startCustomizeFragment(menu[position], size, price)
+            listener.startCustomizeFragment(menu[position].id, size, price)
         }
 
     }

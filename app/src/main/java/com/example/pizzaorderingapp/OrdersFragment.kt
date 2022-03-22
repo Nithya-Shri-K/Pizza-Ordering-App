@@ -17,25 +17,29 @@ import kotlin.collections.ArrayList
 
 class OrdersFragment(val userType: String) : Fragment() {
     lateinit var binding: FragmentOrdersBinding
+    lateinit var databaseHelper: DatabaseHelper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentOrdersBinding.inflate(layoutInflater, container, false)
+        databaseHelper = DatabaseHelper(requireContext())
         if (userType == USER) {
 
-            val currentUser = arguments?.getSerializable(CURRENT_USER) as User
+            val currentUserId = arguments?.getInt(CURRENT_USER_ID)
             val recyclerView = binding.listOfOrders
             recyclerView.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
-            val orders =
-                Database.listOfOrders.filter { it.userId == currentUser.id } as ArrayList<Order>
-            if (orders.isNotEmpty()) {
-                setOrdersHistoryScreen()
-                recyclerView.adapter = OrdersAdapter(orders, USER)
-            } else {
-                setEmptyOrdersScreen()
+
+            val orders = currentUserId?.let { databaseHelper.getOrdersHistory(it) }
+            if (orders != null) {
+                if (orders.isNotEmpty()) {
+                    setOrdersHistoryScreen()
+                    recyclerView.adapter = OrdersAdapter(orders, USER,requireContext())
+                } else {
+                    setEmptyOrdersScreen()
+                }
             }
             binding.selectDate.visibility = View.GONE
 
@@ -81,14 +85,9 @@ class OrdersFragment(val userType: String) : Fragment() {
         val myFormat = "dd-MM-yyyy"
         val formattedDate = SimpleDateFormat(myFormat, Locale.UK)
         val selectedDate = formattedDate.format(date)
-        println(selectedDate)
-        val orders = Database.listOfOrders.filter {
-            it.date.compareTo(selectedDate) == 0
-        } as ArrayList<Order>
+        val orders = databaseHelper.filterOrdersByDate(selectedDate)
         setOrdersHistoryScreen()
-        recyclerView.adapter = OrdersAdapter(orders, ADMIN)
-
-
+        recyclerView.adapter = OrdersAdapter(orders, ADMIN,requireContext())
     }
 
     private fun setEmptyOrdersScreen() {

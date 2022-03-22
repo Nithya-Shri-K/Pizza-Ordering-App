@@ -10,7 +10,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.pizzaorderingapp.databinding.FragmentAddressDialogBinding
 
 
-class AddressDialogFragment(val currentUser: User, val listener: AddressHandlerListener) :
+class AddressDialogFragment(val currentUserId: Int, val listener: AddressHandlerListener) :
     DialogFragment() {
     lateinit var binding: FragmentAddressDialogBinding
     override fun onCreateView(
@@ -18,27 +18,25 @@ class AddressDialogFragment(val currentUser: User, val listener: AddressHandlerL
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAddressDialogBinding.inflate(layoutInflater, container, false)
-
+        val databaseHelper = DatabaseHelper(requireContext())
 
         binding.save.setOnClickListener {
 
             val address = binding.completeAddress.text.toString()
             val selectedTitleId = binding.addressTitle.checkedRadioButtonId
-            println(selectedTitleId)
-            if(address.isNotEmpty() && selectedTitleId != -1) {
+            if (address.isNotEmpty() && selectedTitleId != -1) {
                 val title = binding.root.findViewById<RadioButton>(selectedTitleId).text.toString()
-                UserHandler.addAddress(currentUser, title, address)
-                listener.refresh()
+                UserHandler.addAddress(currentUserId, title, address, databaseHelper)
+                listener.refreshAddressList()
                 dismiss()
-            }else
+            } else {
                 Toast.makeText(
                     context,
                     getString(R.string.save_error_message),
                     Toast.LENGTH_SHORT
                 ).show()
+            }
         }
-
-
         return binding.root
     }
 }

@@ -1,63 +1,70 @@
 package com.example.pizzaorderingapp
 
+import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+import com.example.pizzaorderingapp.databinding.CartItemBinding
 
-class CartAdapter(val cart: ArrayList<Item>, val listener: CartActionListener) :
-    RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
-    interface CartActionListener {
-        fun refreshData()
-    }
+class CartAdapter(
+    val cartItemsList: MutableList<Item>,
+    val listener: CartActionListener,
+    val context: Context
+) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
-    inner class CartViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val itemName = view.findViewById<TextView>(R.id.text_title)
-        val itemSize = view.findViewById<TextView>(R.id.text_size)
-        val toppings = view.findViewById<TextView>(R.id.text_toppings)
-        val quantity = view.findViewById<TextView>(R.id.quantity)
-        val price = view.findViewById<TextView>(R.id.text_price)
-        val increment = view.findViewById<TextView>(R.id.increment)
-        val decrement = view.findViewById<TextView>(R.id.decrement)
+    val databaseHelper = DatabaseHelper(context)
 
+    inner class CartViewHolder(binding: CartItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        val itemName = binding.itemName
+        val itemSize = binding.itemSize
+        val toppings = binding.selectedToppings
+        val quantity = binding.quantity
+        val price = binding.itemPrice
+        val increment = binding.increment
+        val decrement = binding.decrement
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.cart_item, parent, false)
-        return CartViewHolder(view)
+        val binding = CartItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return CartViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
-        holder.itemName.text = cart[position].item.name
-        holder.itemSize.text = cart[position].size.name
-        var topping = arrayListOf<String>()
-        for (i in cart[position].toppings) {
-            topping.add(i.name)
+        val cartCurrentItem = cartItemsList[position]
+        val pizzaId = cartCurrentItem.pizzaId
+        val toppingNameList = mutableListOf<String>()
+        val itemId = cartCurrentItem.itemId
+        val selectedToppings = databaseHelper.getSelectedToppings(itemId)
+        holder.itemName.text = databaseHelper.getPizzaName(pizzaId)
+        holder.itemSize.text = cartCurrentItem.size.name
+
+        for (toppingId in selectedToppings) {
+            val toppingName = databaseHelper.getToppingName(toppingId)
+            toppingNameList.add(toppingName)
         }
-        if (topping.isNotEmpty())
-            holder.toppings.text = topping.toString()
-        holder.quantity.text = cart[position].quantity.toString()
-        holder.price.text = "Rs. ${cart[position].price.toString()}"
+        if (toppingNameList.isNotEmpty())
+            holder.toppings.text = toppingNameList.toString()
+
+        holder.quantity.text = cartCurrentItem.quantity.toString()
+        holder.price.text = context.getString(R.string.price_prefix,cartCurrentItem.price.toString())
         holder.increment.setOnClickListener {
-            val pricePerItem = cart[position].price / cart[position].quantity
-            cart[position].price += pricePerItem
-            cart[position].quantity += 1
-            listener.refreshData()
+            val pricePerItem = cartCurrentItem.price / cartCurrentItem.quantity
+            cartCurrentItem.price += pricePerItem
+            cartCurrentItem.quantity += 1
+            listener.refreshCart()
         }
         holder.decrement.setOnClickListener {
-            val pricePerItem = cart[position].price / cart[position].quantity
-            cart[position].price -= pricePerItem
-            cart[position].quantity -= 1
-            if (cart[position].quantity == 0) {
-                UserHandler.removeItemFromCart(cart, cart[position])
+            val pricePerItem = cartCurrentItem.price / cartCurrentItem.quantity
+            cartCurrentItem.price -= pricePerItem
+            cartCurrentItem.quantity -= 1
+            if (cartCurrentItem.quantity == 0) {
+                UserHandler.removeItemFromCart(cartCurrentItem.itemId,databaseHelper)
             }
-            listener.refreshData()
+            listener.refreshCart()
         }
     }
 
     override fun getItemCount(): Int {
-        return cart.size
+        return cartItemsList.size
     }
 }

@@ -10,16 +10,18 @@ import com.example.pizzaorderingapp.databinding.ActivityAdminBinding
 import com.google.android.material.navigation.NavigationView
 
 class AdminActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityAdminBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setFragment(AdminPizzaMenuFragment())
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navigationView: NavigationView = binding.navigation
         val toolbar = binding.menuToolbar
-        val toggle: ActionBarDrawerToggle =
+        val toggle =
             ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
@@ -47,7 +49,7 @@ class AdminActivity : AppCompatActivity() {
     }
 
     private fun setFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.admin_container, fragment).commit()
+
+        supportFragmentManager.beginTransaction().replace(R.id.admin_container, fragment).commit()
     }
 }

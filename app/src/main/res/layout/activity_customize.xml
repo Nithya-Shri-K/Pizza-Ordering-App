@@ -79,6 +79,21 @@
             android:orientation="horizontal"
 
             >
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:layout_marginLeft="10dp"-->
+<!--                app:cardElevation="10dp"-->
+<!--                android:layout_gravity="center"-->
+<!--                >-->
+<!--            <com.example.pizzaorderingapp.IncrementDecrementButton-->
+<!--                android:id="@+id/increment_decrement_button"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                />-->
+<!--            </androidx.cardview.widget.CardView>-->
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"

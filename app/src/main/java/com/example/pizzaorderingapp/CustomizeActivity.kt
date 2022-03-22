@@ -6,38 +6,49 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pizzaorderingapp.databinding.ActivityCustomizeBinding
 
 class CustomizeActivity : AppCompatActivity(), ToppingSelector {
-    var selectedToppings: ArrayList<Topping> = arrayListOf()
+    var selectedToppings: ArrayList<Int> = arrayListOf()
     var itemPrice: Int = 0
     var toppingPrice: Int = 0
     var totalPrice: Int = 0
     var cart: ArrayList<Item> = arrayListOf()
     var itemQuantity = 1
     lateinit var binding: ActivityCustomizeBinding
+    lateinit var databaseHelper: DatabaseHelper
+    //var price = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCustomizeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        databaseHelper = DatabaseHelper(this)
 
-        val selectedItem = intent.getSerializableExtra(SELECTED_ITEM) as Pizza
+        val selectedItemId = intent.getIntExtra(SELECTED_PIZZA_ID,0)
         val selectedSize = intent.getSerializableExtra(SELECTED_SIZE) as Size
-        val price = intent.getIntExtra(ITEM_PRICE, 0)
+        var price = intent.getIntExtra(ITEM_PRICE, 0)
+        val currentUserId = intent.getIntExtra(CURRENT_USER_ID,0)
         itemPrice = price
-        setSelectedItemDetail(selectedItem, selectedSize, price)
-        setToppings()
+        setSelectedItemDetail(selectedItemId, selectedSize, price)
+        showAvailableToppings()
+
+
         with(binding) {
             addToCart.setOnClickListener {
-                val item = UserHandler.createItem(
-                    selectedItem,
+                val itemId:Int = UserHandler.createItem(
+                    selectedItemId,
                     itemQuantity,
-                    selectedToppings,
                     selectedSize,
-                    totalPrice
+                    totalPrice,
+                    selectedToppings,
+                    databaseHelper
                 )
-                intent.putExtra(SELECTED_ITEM, item)
+
+
+                println("ItemId $itemId")
+                intent.putExtra(SELECTED_ITEM_ID,itemId)
                 setResult(RESULT_OK, intent)
                 finish()
 
             }
+
             increment.setOnClickListener {
                 onQuantityIncrement(price)
             }
@@ -50,17 +61,20 @@ class CustomizeActivity : AppCompatActivity(), ToppingSelector {
         }
     }
 
-    private fun setToppings() {
+    private fun showAvailableToppings() {
+        val databaseHelper = DatabaseHelper(this)
         val recyclerView = binding.recyclerviewToppings
-        val toppings = ToppingAdapter(Database.listOfToppings, USER_TYPE_USER, this, this)
+        val toppings = ToppingAdapter(databaseHelper.getToppings(), USER_TYPE_USER, this, this)
+
         recyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = toppings
     }
 
-    private fun setSelectedItemDetail(selectedItem: Pizza, selectedSize: Size, price: Int) {
+    private fun setSelectedItemDetail(selectedItemId: Int, selectedSize: Size, price: Int) {
+        val pizzaName = databaseHelper.getPizzaName(selectedItemId)
         with(binding) {
-            selectedItemName.text = selectedItem.name
+            selectedItemName.text = pizzaName
             itemPrice.text = getString(R.string.price_prefix, price.toString())
             size.text = selectedSize.name
             quantity.text = itemQuantity.toString()
@@ -69,15 +83,14 @@ class CustomizeActivity : AppCompatActivity(), ToppingSelector {
         setTotalPrice()
 
     }
-
-    private fun onQuantityIncrement(price: Int) {
-        itemQuantity += 1
+    fun onQuantityIncrement(price: Int) {
+        itemQuantity +=1
         itemPrice = (price) * itemQuantity
         binding.quantity.text = itemQuantity.toString()
         setTotalPrice()
     }
 
-    private fun onQuantityDecrement(price: Int) {
+    fun onQuantityDecrement(price: Int) {
         itemQuantity -= 1
         if (itemQuantity > 0) {
             itemPrice = (price) * itemQuantity
@@ -95,15 +108,15 @@ class CustomizeActivity : AppCompatActivity(), ToppingSelector {
 
     }
 
-    override fun onCheck(topping: Topping) {
+    override fun onToppingSelected(topping: Topping) {
         toppingPrice += topping.price
         setTotalPrice()
-        selectedToppings.add(topping)
+        selectedToppings.add(topping.id)
     }
 
-    override fun onUncheck(topping: Topping) {
+    override fun onToppingDeselected(topping: Topping) {
         toppingPrice -= topping.price
         setTotalPrice()
-        selectedToppings.remove(topping)
+        selectedToppings.remove(topping.id)
     }
 }

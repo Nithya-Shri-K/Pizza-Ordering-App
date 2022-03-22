@@ -1,5 +1,6 @@
 package com.example.pizzaorderingapp
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,8 +8,10 @@ import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class OrdersAdapter(val orders: ArrayList<Order>, val userType: String) :
+class OrdersAdapter(val orders: ArrayList<Order>, val userType: String, val context: Context) :
     RecyclerView.Adapter<OrdersAdapter.OrderViewHolder>() {
+    val databaseHelper = DatabaseHelper(context)
+
     inner class OrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val orderId = view.findViewById<TextView>(R.id.order_id)
         val orderItems = view.findViewById<RecyclerView>(R.id.order_items)
@@ -54,6 +57,7 @@ class OrdersAdapter(val orders: ArrayList<Order>, val userType: String) :
                             adapterView?.getItemAtPosition(selectedStatus).toString()
                         )
                         orders[adapterPosition].status = status
+                        databaseHelper.updateOrderStatus( orders[adapterPosition].orderId,status.name)
 
                     }
 
@@ -72,14 +76,18 @@ class OrdersAdapter(val orders: ArrayList<Order>, val userType: String) :
     }
 
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
-        holder.orderId.text = orders[position].orderId.toString()
+        val orderId = orders[position].orderId
+        holder.orderId.text = orderId.toString()
         holder.setSpinnerData()
         holder.orderItems.layoutManager =
             LinearLayoutManager(holder.context, LinearLayoutManager.VERTICAL, false)
-        holder.orderItems.adapter = ItemAdapter(orders[position].items)
+        val listOfItemId = databaseHelper.getItemsInOrder(orderId)
+        val listOfItems = databaseHelper.getItem(listOfItemId)
+        holder.orderItems.adapter = ItemAdapter(listOfItems, context)
         holder.date.text = orders[position].date
         holder.price.text = "Rs. ${orders[position].totalPrice}"
-        holder.deliveryAddress.text = orders[position].deliveryAddress.toString()
+        holder.deliveryAddress.text =
+            databaseHelper.getCompleteAddress(orders[position].deliveryAddress)
 
 
     }

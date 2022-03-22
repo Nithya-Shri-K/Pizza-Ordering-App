@@ -20,19 +20,33 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLoginBinding.inflate(layoutInflater, container, false)
+        val databaseHelper = DatabaseHelper(requireContext())
         binding.buttonLogin.setOnClickListener {
             val authentication = Authentication()
             val phoneNumber = binding.phoneNumber.text.toString()
             val password = binding.password.text.toString()
-            val currentUser = authentication.login(phoneNumber, password)
-            if (currentUser != null) {
-                setFragmentResult(CURRENT_USER_KEY, bundleOf(CURRENT_USER to currentUser))
+            if (phoneNumber.isNotEmpty() && password.isNotEmpty()) {
+                val currentUserId = authentication.login(phoneNumber, password, databaseHelper)
+                if (currentUserId > 0) {
+                    setFragmentResult(CURRENT_USER_KEY, bundleOf(CURRENT_USER_ID to currentUserId))
 
-            } else {
-                Toast.makeText(context, getString(R.string.login_error_message), Toast.LENGTH_SHORT)
+                } else if (currentUserId == 0) {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.incorrect_password),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else
+                    Toast.makeText(
+                        context,
+                        getString(R.string.invalid_account),
+                        Toast.LENGTH_SHORT
+                    ).show()
+            } else
+                Toast.makeText(context, getString(R.string.save_error_message), Toast.LENGTH_SHORT)
                     .show()
-            }
         }
+
         return binding.root
 
     }

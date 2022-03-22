@@ -24,7 +24,8 @@ class RegisterOrLoginActivity : AppCompatActivity() {
             binding.toolbar.root.visibility = View.VISIBLE
         }
         supportFragmentManager.setFragmentResultListener(CURRENT_USER_KEY, this) { _, bundle ->
-            intent.putExtra(CURRENT_USER, bundle.getSerializable(CURRENT_USER))
+
+            intent.putExtra(CURRENT_USER_ID, bundle.getInt(CURRENT_USER_ID))
             setResult(RESULT_OK, intent)
             finish()
 

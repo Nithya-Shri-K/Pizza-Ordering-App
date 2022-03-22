@@ -13,19 +13,16 @@ class UserAccountActivity : AppCompatActivity() {
         binding = ActivityUserAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val operation = intent.getStringExtra(OPERATION)
-        val user = intent.getSerializableExtra(CURRENT_USER) as User
-        val currentUser = Database.listOfUsers.filter {
-            it.id == user.id
-        }[0]
+        val currentUserId = intent.getIntExtra(CURRENT_USER_ID,0)
         when (operation) {
             ORDER_HISTORY -> {
                 val fragment = OrdersFragment(USER)
-                fragment.arguments = bundleOf(CURRENT_USER to currentUser)
+                fragment.arguments = bundleOf(CURRENT_USER_ID to currentUserId)
                 replaceFragment(fragment)
             }
             ADDRESS_BOOK -> {
                 val fragment = AddressBookFragment()
-                fragment.arguments = bundleOf(CURRENT_USER to currentUser)
+                fragment.arguments = bundleOf(CURRENT_USER_ID to currentUserId)
                 replaceFragment(fragment)
             }
         }
